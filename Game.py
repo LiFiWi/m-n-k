@@ -1,4 +1,7 @@
 import numpy as np
+import Board
+import Player
+import MyBot 
 
 class Game:
     def __init__():
