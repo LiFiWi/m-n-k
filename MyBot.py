@@ -1,8 +1,10 @@
 import numpy as numpy
+import Board 
+import Game
 
 class MyBot(Player):    
     def __init__():
-        print()
+        return
 
-    def make_move(row: int, col: int, board:Board) ->tuple:
+    def make_move(row: int, col: int, board:Board) -> tuple:
         return

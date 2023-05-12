@@ -1,19 +1,18 @@
 import numpy as np
+from Game import Game
+from Player import Player 
+from MyBot import MyBot 
 
 class Board:
-    def __init__(m: 5, n: 5) -> None:
-        self.m = m
-        self.n = n
-        self.k = 4
+    def __init__() -> None:
+        return
     
     def reset() -> None:
         return
 
     def display() -> None:
-        return
+        print("hello")
 
     def has_won() -> int:
         return 
-
-
 
