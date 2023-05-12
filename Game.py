@@ -1,7 +1,7 @@
 import numpy as np
-import Board
-import Player
-import MyBot 
+from Game import Game
+from Board import Board 
+from MyBot import MyBot 
 
 class Game:
     def __init__():
