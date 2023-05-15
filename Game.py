@@ -1,4 +1,7 @@
+from board import Board
+from player import Player
 import numpy as np
+
 class Game:
     def __init__(self):
         return 
@@ -7,6 +10,8 @@ class Game:
         return
 
     def game_loop(self) -> None:
-        return
+        finished = false 
+        while not finished:
+            print()
     
 

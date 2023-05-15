@@ -1,14 +1,14 @@
 import numpy as np
 
 class Board:
-    mCol = None
     nRow = None 
+    mCol = None
     kInARow = None 
-    fields = None 
+    field = None 
 
-    def __init__(self, m = 5, n = 5, k = 4) -> None:
-        self.mCol = m
+    def __init__(self, n = 5,  m = 5, k = 4) -> None:
         self.nRow = n
+        self.mCol = m
         self.kInARow = k 
         self.field = np.full([m, n], 0)
     
@@ -21,8 +21,6 @@ class Board:
         print(self.toString())
         #Variables 
         field_list = self.field.tolist()
-        #Border 
-
         #Board
         for i in range(len(field_list)):
             row = "| "
@@ -41,23 +39,28 @@ class Board:
         else:
             return " "
 
+    def positionFree(self, row: int, col: int) -> bool:
+        if self.field[row, col] == 0:
+            return True
+        else:
+            return False
+
+    def positionExists(self, row:int, col:int) -> bool:
+        if self.nRow <= row or self.mCol <= col:
+            return False
+        else:
+            return True
+            
     def has_won(self) -> int:
-        return 
+        if 0 in numpy.unique(field): 
+            return 0 
     
 
     def toString(self) -> str:
         return ("mCol: " + str(self.mCol) + '\n'+ "nRow: " + str(self.nRow) + '\n' + "kInRow: " + str(self.kInARow) )
 
-b = np.full([5, 4], 0)
-b_list = b.tolist()
-for i in range(len(b_list)):
-    row = "| "
-    for j in range(len(b_list[i])):
-        row += (str(b_list[i][j]) + " | ")
-    print(row)
-    #print((len(row) - 1) * "-" )
-#b.display()
-#print(b.field[0].size)
-board = Board()
-board.display()
+
+
+#board = Board()
+#board.display()
 
