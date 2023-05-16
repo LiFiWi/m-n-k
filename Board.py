@@ -15,7 +15,11 @@ class Board:
         self.field = np.full([m, n], 0)
     
     def reset(self) -> None:
-        return 
+        self.field.fill(0)
+        
+
+    def fillUp(self, number: int) -> None:
+        self.field.fill(number)
 
     def createTopBorder(self) -> str:
         topBorder = "  | "
@@ -79,12 +83,11 @@ class Board:
 
     def toString(self) -> str:
         return ("mCol: " + str(self.mCol) + '\n'+ "nRow: " + str(self.nRow) + '\n' + "kInRow: " + str(self.kInARow) )
-    
-    def fillUp(self, row: int, col: int) -> None:
-        for i in range(row):
-            for j in range(col):
-                Player.make_move(i, j, self)
-#board = Board()
-#board.display()
 
-#test
+board = Board()
+board.fillUp(2)
+board.display()
+board.reset()
+board.display()
+board.fillUp(2)
+board.display()
