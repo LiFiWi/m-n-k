@@ -1,5 +1,5 @@
-from board import Board
-from player import Player
+from Board import Board
+from Player import Player
 import numpy as np
 
 class Game:
