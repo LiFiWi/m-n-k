@@ -57,8 +57,10 @@ class Board:
 
     def positionFree(self, row: int, col: int) -> bool:
         if self.field[row, col] == 0:
+            print("position free")
             return True
         else:
+            print("position not free")
             return False
 
     def positionExists(self, row:int, col:int) -> bool:
@@ -72,14 +74,16 @@ class Board:
             
     def has_won(self) -> int:
         if 0 in np.unique(self.field): 
-            return 0 
+            return 0
     
 
     def toString(self) -> str:
         return ("mCol: " + str(self.mCol) + '\n'+ "nRow: " + str(self.nRow) + '\n' + "kInRow: " + str(self.kInARow) )
-
-
-
+    
+    def fillUp(self, row: int, col: int) -> None:
+        for i in range(row):
+            for j in range(col):
+                Player.make_move(i, j, self)
 #board = Board()
 #board.display()
 

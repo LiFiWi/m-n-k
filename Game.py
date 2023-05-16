@@ -21,13 +21,16 @@ p2 = Player("t2", 2, b)
 player = [p1, p2]
 counter = 1
 
-while (not b.has_won()):
-    print(counter)
-    row = int(input("Row Number: "))
-    col = int(input("Col Number: "))
-    player[counter].make_move(row, col, b)
+while (b.has_won()==0):
+    #print(counter)
+    #row = int(input("Row Number: "))
+    #col = int(input("Col Number: "))
+    #if player[counter].make_move(row, col, b) == (row, col):
+    #    counter += 1
+    #    counter = counter % 2
+    for i in range(5):
+        for j in range(5):
+            p1.make_move(i, j, b)
     b.display()
-    print(player[counter].make_move(row, col, b))
-    if b.positionExists(row, col) and b.positionFree(row, col):
-        counter += 1
-        counter = counter % 2
+print("fertig")    
+
