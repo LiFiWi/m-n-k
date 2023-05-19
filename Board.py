@@ -28,7 +28,7 @@ class Board:
         
 
     def fillUp(self, number: int) -> None:
-        """Fills the Board's fields with"""
+        """Fills the Board's fields with the given player_number."""
         self.field.fill(number)
 
     def createTopBorder(self) -> str:
