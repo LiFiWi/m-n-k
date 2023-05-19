@@ -130,6 +130,14 @@ class Board:
         """Returns the number of columns and rows and the needed span of fields to win."""
         return ("mCol: " + str(self.mCol) + '\n'+ "nRow: " + str(self.nRow) + '\n' + "kInRow: " + str(self.kInARow) )
 
+    def checkHorizontal() -> bool:
+        """Returns if winning condition is achieved horizontally."""
+
+    def checkVertival() -> bool:
+        """Returns if winning condition is achieved vertically."""
+
+    def checkDiagonal() -> bool:
+        """Returns if winning condition is achieved diagonally"""    
 #board = Board()
 #board.fillUp(2)
 #board.display()

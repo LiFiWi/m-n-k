@@ -28,7 +28,7 @@ while (b.has_won()==0):
     #if player[counter].make_move(row, col, b) == (row, col):
     #    counter += 1
     #    counter = counter % 2
-    b.fillUp(5, 5)
+    b.fillUp(2)
     b.display()
 print("Das Spiel wurde beendet!!!")    
 
