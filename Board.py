@@ -26,7 +26,6 @@ class Board:
         """Resets the board's fields to default (0)."""
         self.field.fill(0)
         
-
     def fillUp(self, number: int) -> None:
         """Fills the Board's fields with the given player_number."""
         self.field.fill(number)
@@ -64,7 +63,6 @@ class Board:
         #Bottom Border
         print(self.createBorder())
         
-
     def visualizeNumber(self, number: int) -> str:
         '''
         Visualizes player_number to either O, X or simple gap. Returns a string.

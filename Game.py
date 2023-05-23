@@ -23,12 +23,12 @@ counter = 1
 
 while (b.has_won()==0):
     #print(counter)
-    #row = int(input("Row Number: "))
-    #col = int(input("Col Number: "))
-    #if player[counter].make_move(row, col, b) == (row, col):
-    #    counter += 1
-    #    counter = counter % 2
-    b.fillUp(2)
+    row = int(input("Row Number: "))
+    col = int(input("Col Number: "))
+    if player[counter].make_move(row, col, b) == (row, col):
+        counter += 1
+        counter = counter % 2
+    
     b.display()
 print("Das Spiel wurde beendet!!!")    
 
