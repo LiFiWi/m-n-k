@@ -36,4 +36,6 @@ print("Das Spiel wurde beendet!!!")
 if (b.has_won()==1):
     print("Spieler 1 gewinnt")
 if (b.has_won()==2):
-    print("Spieler 2 gewinnt")    
+    print("Spieler 2 gewinnt")
+#test
+    
