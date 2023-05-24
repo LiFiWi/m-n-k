@@ -120,21 +120,40 @@ class Board:
 
             
     def has_won(self) -> int:
-        if 0 in np.unique(self.field): 
-            return 0
+        #if 0 in np.unique(self.field): 
+        #    return 0
+        wonInt=self.checkHorizontal()
+        if(wonInt==0):
+            wonInt=self.checkVertival()
+        return wonInt
     
 
     def toString(self) -> str:
         """Returns the number of columns and rows and the needed span of fields to win."""
         return ("mCol: " + str(self.mCol) + '\n'+ "nRow: " + str(self.nRow) + '\n' + "kInRow: " + str(self.kInARow) )
 
-    def checkHorizontal() -> bool:
+    def checkHorizontal(self) -> int:
         """Returns if winning condition is achieved horizontally."""
-
-    def checkVertival() -> bool:
+        for i in range(self.nRow):    
+            for j in range (self.mCol-3):
+                if self.field[i,j] == self.field[i,(j+1)] == self.field[i,(j+2)] == self.field[i,(j+3)] == 1:
+                    return 1
+                elif self.field[i,j] == self.field[i,(j+1)] == self.field[i,(j+2)] == self.field[i,(j+3)] == 2:
+                    return 2
+                else:
+                    return 0
+            
+    def checkVertival(self) -> int:
         """Returns if winning condition is achieved vertically."""
-
-    def checkDiagonal() -> bool:
+        for i in range(self.nRow-3):    
+            for j in range (self.mCol):
+                    if self.field[i,j] == self.field[(i+1),j] == self.field[(i+2),j] == self.field[(i+3),j] == 1:
+                        return 1
+                    elif self.field[i,j] == self.field[(i+1),j] == self.field[(i+2),j] == self.field[(i+3),j] == 2:
+                        return 2
+                    else:
+                        return 0
+    def checkDiagonal(self) -> int:
         """Returns if winning condition is achieved diagonally"""    
 #board = Board()
 #board.fillUp(2)
