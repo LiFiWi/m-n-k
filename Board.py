@@ -134,27 +134,27 @@ class Board:
 
     def checkHorizontal(self) -> int:
         """Returns if winning condition is achieved horizontally."""
+        numberHorizontal=0
         for i in range(self.nRow):    
             for j in range (self.mCol-3):
                 if self.field[i,j] == self.field[i,(j+1)] == self.field[i,(j+2)] == self.field[i,(j+3)] == 1:
-                    return 1
-                elif self.field[i,j] == self.field[i,(j+1)] == self.field[i,(j+2)] == self.field[i,(j+3)] == 2:
-                    return 2
-                else:
-                    return 0
+                    numberHorizontal=1
+                if self.field[i,j] == self.field[i,(j+1)] == self.field[i,(j+2)] == self.field[i,(j+3)] == 2:
+                    numberHorizontal=2
+        return numberHorizontal        
             
     def checkVertival(self) -> int:
         """Returns if winning condition is achieved vertically."""
+        numberVertical=0
         for i in range(self.nRow-3):    
             for j in range (self.mCol):
                     if self.field[i,j] == self.field[(i+1),j] == self.field[(i+2),j] == self.field[(i+3),j] == 1:
-                        return 1
-                    elif self.field[i,j] == self.field[(i+1),j] == self.field[(i+2),j] == self.field[(i+3),j] == 2:
-                        return 2
-                    else:
-                        return 0
+                        numberVertical=1
+                    if self.field[i,j] == self.field[(i+1),j] == self.field[(i+2),j] == self.field[(i+3),j] == 2:
+                        numberVertical=2
+        return numberVertical
     def checkDiagonal(self) -> int:
-        """Returns if winning condition is achieved diagonally"""    
+        """Returns if winning condition is achieved diagonally"""   
 #board = Board()
 #board.fillUp(2)
 #board.display()
