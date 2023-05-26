@@ -124,6 +124,7 @@ class Board:
         #    return 0
         wonInt=self.checkHorizontal()
         if(wonInt==0):
+            print("vertical")
             wonInt=self.checkVertival()
         if(wonInt==0):
             wonInt=self.checkDiagonal()
@@ -154,16 +155,27 @@ class Board:
             
     def checkVertival(self) -> int:
         """Returns if winning condition is achieved vertically."""
+        
         numberVertical=0
-        for i in range(self.nRow-3):    
-            for j in range (self.mCol):
-                    if self.field[i,j] == self.field[(i+1),j] == self.field[(i+2),j] == self.field[(i+3),j] == 1:
-                        numberVertical=1
-                    if self.field[i,j] == self.field[(i+1),j] == self.field[(i+2),j] == self.field[(i+3),j] == 2:
-                        numberVertical=2
+        for i in range(self.mCol):
+            counter1 = 1
+            counter2 = 1    
+            for j in range (self.nRow-1):
+                if self.field[j,i] == self.field[(j+1),(i)] == 1:
+                    counter1 += 1
+                    print("test1 " + str(counter1))
+                    if (counter1 == self.kInARow):
+                        numberVertical = 1
+                elif self.field[j,i] == self.field[(j+1),(i)] == 2:
+                    counter2 += 1
+                    print("test2 " + str(counter2))
+                    if (counter2 == self.kInARow):
+                        numberVertical = 2
         return numberVertical
+    
     def checkDiagonal(self) -> int:
         """Returns if winning condition is achieved diagonally"""
+        
         numberDiagonal=0
         for i in range(self.nRow-3):    
             for j in range (self.mCol-3):
