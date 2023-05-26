@@ -127,7 +127,6 @@ class Board:
             wonInt=self.checkVertical()
         if(wonInt==0):
             wonInt=self.checkDiagonal()
-            print("diagonal")
         return wonInt
     
 
@@ -175,7 +174,7 @@ class Board:
         """Returns if winning condition is achieved diagonally"""
         
         numberDiagonal=0
-        for i in range(self.nRow - 3):
+        for i in range(-1,self.nRow - 3):
             diagonalArray = np.diagonal(self.field, i)
             print(diagonalArray)
             counter1 = 1 
