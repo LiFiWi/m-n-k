@@ -24,7 +24,7 @@ player2name = str(input("Name von Spieler 2: "))
 p1 = Player(player1name, 1, b)
 p2 = Player(player2name, 2, b)
 player = [p1, p2]
-counter = 1
+counter = 0
 
 
 while (b.has_won()==0):
