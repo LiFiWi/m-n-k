@@ -122,11 +122,13 @@ class Board:
     def has_won(self) -> int:
         #if 0 in np.unique(self.field): 
         #    return 0
-        wonInt=self.checkHorizontal()
-        if(wonInt==0):
-            wonInt=self.checkVertical()
-        if(wonInt==0):
-            wonInt=self.checkDiagonal()
+        wonInt = self.checkHorizontal()
+        if(wonInt == 0):
+            wonInt = self.checkVertical()
+        if(wonInt == 0):
+            wonInt = self.checkDiagonalTLBR()
+        if(wonInt == 0):
+            wonInt = self.checkDiagonalBLTR()    
         return wonInt
     
 
@@ -170,8 +172,8 @@ class Board:
                         numberVertical = 2
         return numberVertical
     
-    def checkDiagonal(self) -> int:
-        """Returns if winning condition is achieved diagonally"""
+    def checkDiagonalTLBR(self) -> int:
+        """Returns if winning condition is achieved diagonally from top left to bottom right"""
         
         numberDiagonal=0
         for i in range(-1,self.nRow - 3):
@@ -182,14 +184,52 @@ class Board:
             for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
-                    print(j)
-                    print("counter 1 "+ str(counter1))
                     if (counter1 == self.kInARow):
                         numberDiagonal = 1
                 elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
                     counter2 += 1
-                    print(j)
-                    print("counter 2 "+ str(counter2))
+                    if (counter2 == self.kInARow):
+                        numberDiagonal = 2
+        return numberDiagonal
+
+    def checkDiagonalBLTR(self) -> int:
+        """Returns if winning condition is achieved diagonally from bottom left to top right"""
+        
+        numberDiagonal=0
+        for i in range(-1,self.nRow - 3):
+            flippedField=np.fliplr(self.field)
+            diagonalArray = np.diagonal(flippedField, i)
+            print(diagonalArray)
+            counter1 = 1 
+            counter2 = 1
+            for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
+                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
+                    counter1 += 1
+                    if (counter1 == self.kInARow):
+                        numberDiagonal = 1
+                elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
+                    counter2 += 1
+                    if (counter2 == self.kInARow):
+                        numberDiagonal = 2
+        return numberDiagonal
+
+    def checkDiagonalBLTR(self) -> int:
+        """Returns if winning condition is achieved diagonally from bottom left to top right"""
+        
+        numberDiagonal=0
+        for i in range(-1,self.nRow - 3):
+            flippedField=np.fliplr(self.field)
+            diagonalArray = np.diagonal(flippedField, i)
+            print(diagonalArray)
+            counter1 = 1 
+            counter2 = 1
+            for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
+                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
+                    counter1 += 1
+                    if (counter1 == self.kInARow):
+                        numberDiagonal = 1
+                elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
+                    counter2 += 1
                     if (counter2 == self.kInARow):
                         numberDiagonal = 2
         return numberDiagonal   
