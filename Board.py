@@ -33,8 +33,14 @@ class Board:
     def createTopBorder(self) -> str:
         """Returns a string that displays the board's columns."""
         topBorder = "  | "
-        for i in range(len(self.field.tolist())):
-            topBorder += str(i) + " | "
+        if(self.mCol<=10):
+            for i in range(self.mCol):
+                topBorder += str(i) + " | "
+        else:
+            for i in range(10):
+                topBorder += str(i) + " | "
+            for i in range(10,self.mCol):
+                topBorder += str(i) + "| "
         return(topBorder)
 
     def createBoardRow(self, rowIndex: int) -> str:
