@@ -180,7 +180,7 @@ class Board:
             diagonalArray = np.diagonal(self.field, i)
             counter1 = 1 
             counter2 = 1
-            for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
+            for j in range(len(diagonalArray) - 1): 
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
                     if (counter1 == self.kInARow):
@@ -200,7 +200,7 @@ class Board:
             diagonalArray = np.diagonal(flippedField, i)
             counter1 = 1 
             counter2 = 1
-            for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
+            for j in range(len(diagonalArray) - 1): 
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
                     if (counter1 == self.kInARow):
@@ -220,7 +220,7 @@ class Board:
             diagonalArray = np.diagonal(flippedField, i)
             counter1 = 1 
             counter2 = 1
-            for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
+            for j in range(len(diagonalArray) - 1): 
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
                     if (counter1 == self.kInARow):
@@ -230,17 +230,3 @@ class Board:
                     if (counter2 == self.kInARow):
                         numberDiagonal = 2
         return numberDiagonal   
-        # das zweimal counter 2 da steht ist das problem, also nach dem ersten array er addiert nicht sondern scheint zu reseten
-        # ich bin ehrlich, ich verstehe nur so halb was da passiert, ich hab aber auch kopfschmerzen und ferndiagnose ohne mir dir reden zu können ist bisschen schwert
-        # vorallem wenn meine mama mir ins ohr redet // liebe grüße :) -> grüße zurück -> danke
-        # kein stress ruh dich aus, schau dass du gesund wirst -> gebe mein bestes :)) -> hoff ich doch :)) -> ich lieg legit nur im bett und mache nix -> das will ich hören -> blöd das dus nur liest und nihct hörst <- nächste zeile
-        # aua der tat schon weh
-        #ich glaub ich geb gerade auf, du musst doch eh nur bis 14 uhr da sein -> ich überzieh grad, ich will das eigentlich lösen später discord? dann schauen wir zusammen -> können wir machen, aber nur wenn du dich dazu fit genug fühlst -> wir schauen einfach :) -> ok :)
-
-#board = Board()
-#board.fillUp(2)
-#board.display()
-#board.reset()
-#board.display()
-#board.fillUp(2)
-#board.display()
