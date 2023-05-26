@@ -15,9 +15,14 @@ class Game:
             print()
     
 
-b = Board()
-p1 = Player("t1", 1, b)
-p2 = Player("t2", 2, b)
+NumberRows = int(input("Number of Rows: "))
+NumberCols = int(input("Number of Columns: "))
+NumberKinARow = int(input("Length of Row needed to win: "))
+b = Board(NumberRows, NumberCols, NumberKinARow)
+player1name = str(input("Name von Spieler 1: "))
+player2name = str(input("Name von Spieler 2: "))
+p1 = Player(player1name, 1, b)
+p2 = Player(player2name, 2, b)
 player = [p1, p2]
 counter = 1
 
@@ -34,6 +39,6 @@ while (b.has_won()==0):
 print(b.has_won())
 print("Das Spiel wurde beendet!!!")
 if (b.has_won()==1):
-    print("Spieler 1 gewinnt")
+    print(player1name+" gewinnt")
 if (b.has_won()==2):
-    print("Spieler 2 gewinnt")
+    print(player2name+" gewinnt")

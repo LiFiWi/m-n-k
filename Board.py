@@ -8,19 +8,19 @@ class Board:
     kInARow = None 
     field = None 
 
-    def __init__(self, m = 5, n = 5,  k = 4) -> None:
+    def __init__(self, n = 5, m = 5,  k = 4) -> None:
         '''
         This is the constructor for the class Board. It sets its number of columns and rows and the length of the row needed to win.
 
                 Parameters:
-                        m(int): Board's number of columns
                         n(int): Board's number of rows
+                        m(int): Board's number of columns
                         k(int): length of the row needed to win         
         '''
         self.nRow = n
         self.mCol = m
         self.kInARow = k 
-        self.field = np.full([m, n], 0)
+        self.field = np.full([n, m], 0)
     
     def reset(self) -> None:
         """Resets the board's fields to default (0)."""
