@@ -124,10 +124,10 @@ class Board:
         #    return 0
         wonInt=self.checkHorizontal()
         if(wonInt==0):
-            print("vertical")
-            wonInt=self.checkVertival()
+            wonInt=self.checkVertical()
         if(wonInt==0):
             wonInt=self.checkDiagonal()
+            print("diagonal")
         return wonInt
     
 
@@ -153,7 +153,7 @@ class Board:
                         numberHorizontal = 2 
         return numberHorizontal       
             
-    def checkVertival(self) -> int:
+    def checkVertical(self) -> int:
         """Returns if winning condition is achieved vertically."""
         
         numberVertical=0
@@ -163,12 +163,10 @@ class Board:
             for j in range (self.nRow-1):
                 if self.field[j,i] == self.field[(j+1),(i)] == 1:
                     counter1 += 1
-                    print("test1 " + str(counter1))
                     if (counter1 == self.kInARow):
                         numberVertical = 1
                 elif self.field[j,i] == self.field[(j+1),(i)] == 2:
                     counter2 += 1
-                    print("test2 " + str(counter2))
                     if (counter2 == self.kInARow):
                         numberVertical = 2
         return numberVertical
@@ -177,17 +175,32 @@ class Board:
         """Returns if winning condition is achieved diagonally"""
         
         numberDiagonal=0
-        for i in range(self.nRow-3):    
-            for j in range (self.mCol-3):
-                    if self.field[i,j] == self.field[(i+1),(j+1)] == self.field[(i+2),(j+2)] == self.field[(i+3),(j+3)] == 1:
-                        numberDiagonal=1
-                    if self.field[i,j] == self.field[(i+1),(j+1)] == self.field[(i+2),(j+2)] == self.field[(i+3),(j+3)] == 2:
-                        numberDiagonal=2
-                    if self.field[(i+3),j] == self.field[(i+2),(j+1)] == self.field[(i+1),(j+2)] == self.field[i,(j+3)] == 1:
-                        numberDiagonal=1
-                    if self.field[(i+3),j] == self.field[(i+2),(j+1)] == self.field[(i+1),(j+2)] == self.field[i,(j+3)] == 2:
-                        numberDiagonal=2
+        for i in range(self.nRow - 3):
+            diagonalArray = np.diagonal(self.field, i)
+            print(diagonalArray)
+            counter1 = 1 
+            counter2 = 1
+            for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
+                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
+                    counter1 += 1
+                    print(j)
+                    print("counter 1 "+ str(counter1))
+                    if (counter1 == self.kInARow):
+                        numberDiagonal = 1
+                elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
+                    counter2 += 1
+                    print(j)
+                    print("counter 2 "+ str(counter2))
+                    if (counter2 == self.kInARow):
+                        numberDiagonal = 2
         return numberDiagonal   
+        # das zweimal counter 2 da steht ist das problem, also nach dem ersten array er addiert nicht sondern scheint zu reseten
+        # ich bin ehrlich, ich verstehe nur so halb was da passiert, ich hab aber auch kopfschmerzen und ferndiagnose ohne mir dir reden zu können ist bisschen schwert
+        # vorallem wenn meine mama mir ins ohr redet // liebe grüße :) -> grüße zurück -> danke
+        # kein stress ruh dich aus, schau dass du gesund wirst -> gebe mein bestes :)) -> hoff ich doch :)) -> ich lieg legit nur im bett und mache nix -> das will ich hören -> blöd das dus nur liest und nihct hörst <- nächste zeile
+        # aua der tat schon weh
+        #ich glaub ich geb gerade auf, du musst doch eh nur bis 14 uhr da sein -> ich überzieh grad, ich will das eigentlich lösen später discord? dann schauen wir zusammen -> können wir machen, aber nur wenn du dich dazu fit genug fühlst -> wir schauen einfach :) -> ok :)
+
 #board = Board()
 #board.fillUp(2)
 #board.display()
