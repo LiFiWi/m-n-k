@@ -178,7 +178,6 @@ class Board:
         numberDiagonal=0
         for i in range(-1,self.nRow - 3):
             diagonalArray = np.diagonal(self.field, i)
-            print(diagonalArray)
             counter1 = 1 
             counter2 = 1
             for j in range(len(diagonalArray) - 1): #j resettet counter ahhhhhhh ich hasse j ab jetzt
