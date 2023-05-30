@@ -106,7 +106,7 @@ class Board:
             print("position not free")
             return False
 
-    def positionExists(self, row:int, col:int) -> bool:
+    def positionExists(self, row: int, col: int) -> bool:
         '''
         Checks if Position exists. Returns boolean
 
@@ -145,16 +145,16 @@ class Board:
     def checkHorizontal(self) -> int:
         """Returns if winning condition is achieved horizontally."""
 
-        numberHorizontal=0
+        numberHorizontal = 0
         for i in range(self.nRow):
             counter1 = 1
             counter2 = 1    
-            for j in range (self.mCol-1):
-                if self.field[i,j] == self.field[i,(j+1)] == 1:
+            for j in range (self.mCol - 1):
+                if self.field[i,j] == self.field[i, (j + 1)] == 1:
                     counter1 += 1
                     if (counter1 == self.kInARow):
                         numberHorizontal = 1
-                elif self.field[i,j] == self.field[i,(j+1)] == 2:
+                elif self.field[i , j] == self.field[i, (j + 1)] == 2:
                     counter2 += 1
                     if (counter2 == self.kInARow):
                         numberHorizontal = 2 
@@ -163,16 +163,16 @@ class Board:
     def checkVertical(self) -> int:
         """Returns if winning condition is achieved vertically."""
         
-        numberVertical=0
+        numberVertical = 0
         for i in range(self.mCol):
             counter1 = 1
             counter2 = 1    
             for j in range (self.nRow-1):
-                if self.field[j,i] == self.field[(j+1),(i)] == 1:
+                if self.field[j, i] == self.field[(j + 1), (i)] == 1:
                     counter1 += 1
                     if (counter1 == self.kInARow):
                         numberVertical = 1
-                elif self.field[j,i] == self.field[(j+1),(i)] == 2:
+                elif self.field[j, i] == self.field[(j+1), (i)] == 2:
                     counter2 += 1
                     if (counter2 == self.kInARow):
                         numberVertical = 2
@@ -181,8 +181,8 @@ class Board:
     def checkDiagonalTLBR(self) -> int:
         """Returns if winning condition is achieved diagonally from top left to bottom right"""
         
-        numberDiagonal=0
-        for i in range(-1,self.nRow - 3):
+        numberDiagonal = 0
+        for i in range(-1, self.nRow - 3):
             diagonalArray = np.diagonal(self.field, i)
             counter1 = 1 
             counter2 = 1
@@ -200,9 +200,9 @@ class Board:
     def checkDiagonalBLTR(self) -> int:
         """Returns if winning condition is achieved diagonally from bottom left to top right"""
         
-        numberDiagonal=0
-        for i in range(-1,self.nRow - 3):
-            flippedField=np.fliplr(self.field)
+        numberDiagonal = 0
+        for i in range(-1, self.nRow - 3):
+            flippedField = np.fliplr(self.field)
             diagonalArray = np.diagonal(flippedField, i)
             counter1 = 1 
             counter2 = 1
@@ -220,9 +220,9 @@ class Board:
     def checkDiagonalBLTR(self) -> int:
         """Returns if winning condition is achieved diagonally from bottom left to top right"""
         
-        numberDiagonal=0
-        for i in range(-1,self.nRow - 3):
-            flippedField=np.fliplr(self.field)
+        numberDiagonal = 0
+        for i in range(-1, self.nRow - 3):
+            flippedField = np.fliplr(self.field)
             diagonalArray = np.diagonal(flippedField, i)
             counter1 = 1 
             counter2 = 1
