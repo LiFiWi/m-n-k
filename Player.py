@@ -11,9 +11,7 @@ class Player:
                         player_name(int): player's number
                         board(Board): Board where Player is active
         '''
-        self.player_number = player_number
-        self.name = name
-        self.board = board
+        super().__init__(name, player_number, board)
 
     def make_move(self, row: int, col: int, board:Board) -> tuple:
         '''
@@ -31,6 +29,8 @@ class Player:
         if board.positionExists(row, col) and board.positionFree(row, col):          
             print("made a move")
             board.field[row, col] = self.player_number
+        else:
+            self.make_move(board)
             return(row, col)
 
 

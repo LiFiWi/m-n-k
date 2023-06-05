@@ -1,5 +1,6 @@
 from Board import Board
 from Player import Player
+from MyBot import MyBot 
 import numpy as np
 
 class Game:
@@ -21,8 +22,12 @@ NumberKinARow = int(input("Length of Row needed to win: "))
 b = Board(NumberRows, NumberCols, NumberKinARow)
 player1name = str(input("Name von Spieler 1: "))
 player2name = str(input("Name von Spieler 2: "))
-p1 = Player(player1name, 1, b)
-p2 = Player(player2name, 2, b)
+if(player2name=="Bot"):
+    p1 = Player(player1name, 1, b)
+    p2 = MyBot(player2name, 2, b)
+else:
+    p1 = Player(player1name, 1, b)
+    p2 = Player(player2name, 2, b)
 player = [p1, p2]
 counter = 0
 
