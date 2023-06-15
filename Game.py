@@ -22,12 +22,12 @@ NumberKinARow = int(input("Length of Row needed to win: "))
 b = Board(NumberRows, NumberCols, NumberKinARow)
 player1name = str(input("Name von Spieler 1: "))
 player2name = str(input("Name von Spieler 2: "))
-if(player2name=="Bot"):
+'''if(player2name=="Bot"):'''
+p1 = Player(player1name, 1, b)
+p2 = MyBot(player2name, 2, b)
+'''else:
     p1 = Player(player1name, 1, b)
-    p2 = MyBot(player2name, 2, b)
-else:
-    p1 = Player(player1name, 1, b)
-    p2 = Player(player2name, 2, b)
+    p2 = Player(player2name, 2, b)'''
 player = [p1, p2]
 counter = 0
 
@@ -39,7 +39,7 @@ while (b.has_won()==0):
     if player[counter].make_move(row, col, b) == (row, col):
         counter += 1
         counter = counter % 2
-    
+    p2.make_move(b)
     b.display()
 print(b.has_won())
 print("Das Spiel wurde beendet!!!")

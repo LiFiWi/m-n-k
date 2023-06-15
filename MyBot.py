@@ -1,3 +1,4 @@
+from Player import Player
 from Board import Board
 import numpy as np
 
@@ -14,11 +15,12 @@ class MyBot(Player):
         self.player_number = player_number
         self.name = name
         self.board = board
-
     
     def make_move(self, board: Board) -> tuple:
-        row = np.random.randint(0,Board.nRow)
-        col = np.random.randint(0,Board.mCol)
+        row = np.random.randint(1,Board.nRow)
+        col = np.random.randint(Board.mCol)
+        print(row)
+        print(col)
         if board.positionExists(row, col) and board.positionFree(row, col):          
             print("made a move")
             board.field[row, col] = self.player_number

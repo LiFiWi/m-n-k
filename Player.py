@@ -11,7 +11,9 @@ class Player:
                         player_name(int): player's number
                         board(Board): Board where Player is active
         '''
-        super().__init__(name, player_number, board)
+        self.player_number = player_number
+        self.name = name
+        self.board = board
 
     def make_move(self, row: int, col: int, board:Board) -> tuple:
         '''
