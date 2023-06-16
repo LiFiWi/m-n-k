@@ -29,11 +29,12 @@ class Player:
                         tuple: field coordinates
         '''
         if self.board.positionExists(row, col) and self.board.positionFree(row, col):          
-            print("made a move")
+            #print("made a move")
             self.board.field[row, col] = self.player_number
             self.board.take_turn()
         else:
-            print("move failed")
+            #print("move failed")
+            a = 1 + 1
         return(row, col)
 
 

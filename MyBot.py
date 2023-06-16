@@ -17,18 +17,18 @@ class MyBot(Player):
     def make_move(self) -> tuple:
         row = np.random.randint(0, self.board.nRow)
         col = np.random.randint(0, self.board.mCol)
-        print(row)
-        print(col)
-        return super().make_move(row, col, self.board)
+        #print(row)
+        #print(col)
+        return super().make_move(row, col)
         
-
 #
+
 #board = Board()
 #bot1 = MyBot("b1", 1, board)
 #bot2 = MyBot("b2", 2, board)
-#bot = [bot1, bot2]
+#bot = [bot1, bot2]#
 #
-#
+
 #while(board.has_won() == 0):
 #    bot[board.getTurn()].make_move() 
 #    board.display()

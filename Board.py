@@ -102,10 +102,10 @@ class Board:
                         Returns if field is free as a boolean
         '''
         if self.field[row, col] == 0:
-            print("position free")
+            #print("position free")
             return True
         else:
-            print("position not free")
+            #print("position not free")
             return False
 
     def positionExists(self, row: int, col: int) -> bool:
@@ -120,10 +120,10 @@ class Board:
                         Returns if field exists as a boolean
         '''
         if self.nRow <= row or row < 0 or self.mCol <= col or col < 0:
-            print("position doesnt exist")
+            #print("position doesnt exist")
             return False
         else:
-            print("position exists")
+            #print("position exists")
             return True
 
             
