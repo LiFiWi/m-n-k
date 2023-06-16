@@ -8,6 +8,8 @@ class Board:
     kInARow = None 
     field = None 
 
+    takeTurn = 1
+
     def __init__(self, n = 5, m = 5,  k = 4) -> None:
         '''
         This is the constructor for the class Board. It sets its number of columns and rows and the length of the row needed to win.
@@ -137,6 +139,14 @@ class Board:
             wonInt = self.checkDiagonalBLTR()    
         return wonInt
     
+    def take_turn(self, row: int, col: int) -> int: 
+        if self.positionExists(row, col) and self.positionFree(row, col):
+            self.takeTurn = (self.takeTurn % 2) + 1
+        print(self.takeTurn)
+        return self.takeTurn
+        
+        
+
 
     def toString(self) -> str:
         """Returns the number of columns and rows and the needed span of fields to win."""

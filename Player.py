@@ -31,7 +31,9 @@ class Player:
         if board.positionExists(row, col) and board.positionFree(row, col):          
             print("made a move")
             board.field[row, col] = self.player_number
-            return(row, col)
+        else:
+            print("move failed")
+        return(row, col)
 
 
     
