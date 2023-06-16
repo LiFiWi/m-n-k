@@ -15,7 +15,7 @@ class Player:
         self.name = name
         self.board = board
 
-    def make_move(self, row: int, col: int, board:Board) -> tuple:
+    def make_move(self, row: int, col: int) -> tuple:
         '''
         Returns if existing and free the field. Sets the field to the given player_number.
 
@@ -23,14 +23,15 @@ class Player:
                         self: player
                         row(int): field's row
                         col(int): field's column
-                        board(Board): board where field is set
+                        
 
                 Returns:
                         tuple: field coordinates
         '''
-        if board.positionExists(row, col) and board.positionFree(row, col):          
+        if self.board.positionExists(row, col) and self.board.positionFree(row, col):          
             print("made a move")
-            board.field[row, col] = self.player_number
+            self.board.field[row, col] = self.player_number
+            self.board.take_turn()
         else:
             print("move failed")
         return(row, col)

@@ -8,7 +8,7 @@ class Board:
     kInARow = None 
     field = None 
 
-    takeTurn = 1
+    takeTurn = 0
 
     def __init__(self, n = 5, m = 5,  k = 4) -> None:
         '''
@@ -139,14 +139,11 @@ class Board:
             wonInt = self.checkDiagonalBLTR()    
         return wonInt
     
-    def take_turn(self, row: int, col: int) -> int: 
-        if self.positionExists(row, col) and self.positionFree(row, col):
-            self.takeTurn = (self.takeTurn % 2) + 1
-        print(self.takeTurn)
-        return self.takeTurn
-        
-        
-
+    def take_turn(self): 
+        self.takeTurn = (self.takeTurn + 1) % 2
+    
+    def getTurn(self) -> int:
+        return self.takeTurn 
 
     def toString(self) -> str:
         """Returns the number of columns and rows and the needed span of fields to win."""

@@ -22,20 +22,19 @@ class MyBot(Player):
         return super().make_move(row, col, self.board)
         
 
-
-board = Board()
-bot1 = MyBot("b1", 1, board)
-bot2 = MyBot("b2", 2, board)
-bot = [bot1, bot2]
-
-
-while(board.has_won() == 0):
-    bot1.make_move()
-    bot2.make_move()
-    board.display()
-if (board.has_won() == 1): 
-    print(bot2.name + " gewinnt")
-elif (board.has_won() == 2):
-    print(bot1.name + " gewinnt")
-else:
-    print("leider unentschieden.")
+#
+#board = Board()
+#bot1 = MyBot("b1", 1, board)
+#bot2 = MyBot("b2", 2, board)
+#bot = [bot1, bot2]
+#
+#
+#while(board.has_won() == 0):
+#    bot[board.getTurn()].make_move() 
+#    board.display()
+#if (board.has_won() == 1): 
+#    print(bot2.name + " gewinnt")
+#elif (board.has_won() == 2):
+#    print(bot1.name + " gewinnt")
+#else:
+#    print("leider unentschieden.")
