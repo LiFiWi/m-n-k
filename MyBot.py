@@ -12,18 +12,23 @@ class MyBot(Player):
                         player_name(int): player's number
                         board(Board): Board where Player is active
         '''
-        self.player_number = player_number
-        self.name = name
-        self.board = board
+        super().__init__(name, player_number, board)
     
-    def make_move(self, board: Board) -> tuple:
-        row = np.random.randint(1,Board.nRow)
-        col = np.random.randint(Board.mCol)
+    def make_move(self) -> tuple:
+        row = np.random.randint(0, self.board.nRow)
+        col = np.random.randint(0, self.board.mCol)
         print(row)
         print(col)
-        if board.positionExists(row, col) and board.positionFree(row, col):          
-            print("made a move")
-            board.field[row, col] = self.player_number
-        else:
-            self.make_move(board)
-            return(row, col)
+        super().make_move(row, col, self.board)
+
+    def test(self):
+        print("yay")
+
+board = Board()
+bot1 = MyBot("test", 1, board)
+bot2 = MyBot("test", 2, board)
+while(board.has_won() == 0):
+    print("has won: " + str(board.has_won()))
+    bot1.make_move()
+    bot2.make_move()
+    board.display()
