@@ -32,8 +32,8 @@ class Player:
             print("made a move")
             board.field[row, col] = self.player_number
         else:
-            self.make_move(board)
-            return(row, col)
+            print("move failed")
+        return(row, col)
 
 
     

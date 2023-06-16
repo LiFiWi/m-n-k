@@ -8,7 +8,7 @@ class MyBot(Player):
         This is the constructor for the class Player. It sets its name, player_number and Board.
 
                 Parameters:
-                        name(string): player's name
+                        name(str): player's name
                         player_name(int): player's number
                         board(Board): Board where Player is active
         '''
@@ -19,16 +19,23 @@ class MyBot(Player):
         col = np.random.randint(0, self.board.mCol)
         print(row)
         print(col)
-        super().make_move(row, col, self.board)
+        return super().make_move(row, col, self.board)
+        
 
-    def test(self):
-        print("yay")
 
 board = Board()
-bot1 = MyBot("test", 1, board)
-bot2 = MyBot("test", 2, board)
+bot1 = MyBot("b1", 1, board)
+bot2 = MyBot("b2", 2, board)
+bot = [bot1, bot2]
+
+
 while(board.has_won() == 0):
-    print("has won: " + str(board.has_won()))
     bot1.make_move()
     bot2.make_move()
     board.display()
+if (board.has_won() == 1): 
+    print(bot2.name + " gewinnt")
+elif (board.has_won() == 2):
+    print(bot1.name + " gewinnt")
+else:
+    print("leider unentschieden.")

@@ -139,9 +139,11 @@ class Board:
             wonInt = self.checkDiagonalBLTR()    
         return wonInt
     
-    def take_turn(self, row: int, col: int): 
+    def take_turn(self, row: int, col: int) -> int: 
         if self.positionExists(row, col) and self.positionFree(row, col):
             self.takeTurn = (self.takeTurn % 2) + 1
+        print(self.takeTurn)
+        return self.takeTurn
         
         
 
