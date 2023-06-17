@@ -27,6 +27,7 @@ class Board:
     def reset(self) -> None:
         """Resets the board's fields to default (0)."""
         self.field.fill(0)
+        self.takeTurn = 0
         
     def fillUp(self, number: int) -> None:
         """Fills the Board's fields with the given player_number."""

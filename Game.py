@@ -33,29 +33,29 @@ while(int(playerDecision) > 0):
     playerDecision = int(playerDecision) - 1
 
 while(len(playerList) < 2):
-    playerList.append(MyBot(str(input("please enter a bot name: ")), (len(playerList) + 1), board))
-    #please choose a bot difficulty between x and x
+    botName = str(input("please enter a bot name: "))
+    difficultyLevel = int(input("please choose a bot difficulty between 1 and 3: "))
+    while difficultyLevel != 1:
+        difficultyLevel = int(input("please choose againg: "))
+    playerList.append(MyBot(botName, (len(playerList) + 1), board, difficultyLevel))
+    
 
 #start game loop 
-if(not(isinstance(playerList[0], MyBot) and isinstance(playerList[0], MyBot))):
-    while (board.has_won() == 0):
-        if(isinstance(playerList[board.getTurn()], Player)):
-            row = int(input("Row Number: "))
-            col = int(input("Col Number: "))
-            playerList[board.getTurn()].make_move(row, col) 
-            board.display()
-        elif(isinstance(playerList[board.getTurn()], MyBot)):
-            playerList[board.getTurn()].make_move() 
-else:
-    #rounds = int(input("How many rounds do you want your bots to battle? "))
-    rounds = 2
-    counter = 0
-    while (counter < rounds):
-        print("zähler: " + str(counter) + " ---------------------------------------------------------------------------------------")
+end = False
+while not end:
+    if(not(isinstance(playerList[0], MyBot) and isinstance(playerList[0], MyBot))):
         while (board.has_won() == 0):
-            playerList[board.getTurn()].make_move() 
+            print("turn: " + str(board.getTurn()))
+            if(isinstance(playerList[board.getTurn()], MyBot)):
+                print("bot turn")
+                playerList[board.getTurn()].make_move() 
+            else:
+                print("player turn")
+                row = int(input("Row Number: "))
+                col = int(input("Col Number: "))
+                playerList[board.getTurn()].make_move(row, col) 
             board.display()
-        
+
         print("Das Spiel wurde beendet!!!")
         if (board.has_won() == 1): 
             print(playerList[0].name + " gewinnt")
@@ -64,7 +64,28 @@ else:
         else:
             print("leider unentschieden.")
         board.reset()
-        counter += 1
+        if(str(input("do you want to play another round? (yes/ no)")) != "yes"):
+            end = True
+        
+
+    else:
+        rounds = int(input("How many rounds do you want your bots to battle? "))
+        counter = 0
+        while (counter < rounds):
+            print("zähler: " + str(counter) + " ---------------------------------------------------------------------------------------")
+            while (board.has_won() == 0):
+                playerList[board.getTurn()].make_move() 
+                #board.display()
+            
+            print("Das Spiel wurde beendet!!!")
+            if (board.has_won() == 1): 
+                print(playerList[0].name + " gewinnt")
+            elif (board.has_won() == 2):
+                print(playerList[1].name + " gewinnt")
+            else:
+                print("leider unentschieden.")
+            board.reset()
+            counter += 1
+        end = True
 
 
-#print(board.has_won())
