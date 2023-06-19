@@ -23,10 +23,15 @@ NumberCols = 5 #int(input("Number of Columns: "))
 NumberKInARow = 4 #int(input("Length of Row needed to win: "))
 board = Board(NumberRows, NumberCols, NumberKInARow)
 
+#choose player number
+while True: 
+    try:         
+        playerDecision = int(input("How many players are taking part in the game? Choose between two and zero: "))
+        if(playerDecision == 1 or playerDecision == 2 or playerDecision == 0):
+            break
+    except:
+        print("Your input is out of the expected range!")
 #initialzing players
-playerDecision = int(input("How many players are taking part in the game? Choose between two and zero: "))
-while((playerDecision != 1 or playerDecision != 2 or playerDecision != 0) and not isinstance(playerDecision, int)): 
-    playerDecision = input("Your input is out of the expected range! Please enter a number between 0 and 2: ")
 playerList = []
 while(int(playerDecision) > 0):
     playerList.append(Player(str(input("please enter a name for player " + str(len(playerList) + 1) + ": " )), (len(playerList) + 1), board))
@@ -43,7 +48,7 @@ while(len(playerList) < 2):
 #start game loop 
 end = False
 while not end:
-    if(not(isinstance(playerList[0], MyBot) and isinstance(playerList[0], MyBot))):
+    if(not(isinstance(playerList[0], MyBot) and isinstance(playerList[1], MyBot))):
         while (board.has_won() == 0):
             print("turn: " + str(board.getTurn()))
             if(isinstance(playerList[board.getTurn()], MyBot)):
@@ -51,6 +56,7 @@ while not end:
                 playerList[board.getTurn()].make_move() 
             else:
                 print("player turn")
+                print("wir sind hier")
                 row = int(input("Row Number: "))
                 col = int(input("Col Number: "))
                 playerList[board.getTurn()].make_move(row, col) 
