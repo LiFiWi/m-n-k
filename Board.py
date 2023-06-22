@@ -129,14 +129,14 @@ class Board:
 
             
     def has_won(self) -> int:
-        #if 0 in np.unique(self.field): 
-        #    return 0
+        if not (0 in np.unique(self.field)): 
+            return -1
         wonInt = self.checkHorizontal()
         if(wonInt == 0):
             wonInt = self.checkVertical()
-        if(wonInt == 0):
+        elif(wonInt == 0):
             wonInt = self.checkDiagonalTLBR()
-        if(wonInt == 0):
+        elif(wonInt == 0):
             wonInt = self.checkDiagonalBLTR()    
         return wonInt
     
