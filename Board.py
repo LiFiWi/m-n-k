@@ -35,22 +35,22 @@ class Board:
 
     def createTopBorder(self) -> str:
         """Returns a string that displays the board's columns."""
-        topBorder = "  | "
-        if(self.mCol<=10):
+        topBorder = "  │ "
+        if(self.mCol <= 10):
             for i in range(self.mCol):
-                topBorder += str(i) + " | "
+                topBorder += str(i) + " │ "
         else:
             for i in range(10):
-                topBorder += str(i) + " | "
+                topBorder += str(i) + " │ "
             for i in range(10,self.mCol):
-                topBorder += str(i) + "| "
+                topBorder += str(i) + "│ "
         return(topBorder)
 
     def createBoardRow(self, rowIndex: int) -> str:
         """Returns a string that displays the board's rows including the field itself."""
-        row = str(rowIndex) + " | "
+        row = str(rowIndex) + " │ "
         for j in range(len(self.field.tolist()[rowIndex])):
-            row += self.visualizeNumber(self.field.tolist()[rowIndex][j]) + " | "
+            row += self.visualizeNumber(self.field.tolist()[rowIndex][j]) + " │ "
         return(row)
 
     def createBorder(self) -> str:
@@ -244,3 +244,4 @@ class Board:
                     if (counter2 == self.kInARow):
                         numberDiagonal = 2
         return numberDiagonal   
+

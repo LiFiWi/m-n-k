@@ -84,6 +84,7 @@ while not end:
                 #board.display()
             
             print("Das Spiel wurde beendet!!!")
+            board.display()
             if (board.has_won() == 1): 
                 print(playerList[0].name + " gewinnt")
             elif (board.has_won() == 2):
