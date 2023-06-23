@@ -51,7 +51,7 @@ while True:
 #initialzing players
 playerList = []
 while(int(playerDecision) > 0):
-    playerList.append(Player(str(input("please enter a name for player " + str(len(playerList) + 1) + ": " )), (len(playerList) + 1), board))
+    playerList.append(Player(str(input("please enter a name for player " + str(len(playerList) + 1) + ": " )), (len(playerList) + 1)))
     playerDecision = int(playerDecision) - 1
 
 while(len(playerList) < 2):
@@ -63,7 +63,7 @@ while(len(playerList) < 2):
                 break
         except:
             print("Your input is out of the expected range!")
-    playerList.append(MyBot(botName, (len(playerList) + 1), board, difficultyLevel))
+    playerList.append(MyBot(botName, (len(playerList) + 1), difficultyLevel))
     
 
 #start game loop 
@@ -74,7 +74,7 @@ while not end:
             print("turn: " + playerList[board.getTurn()].name)
             if(isinstance(playerList[board.getTurn()], MyBot)):
                 print("bot turn")
-                playerList[board.getTurn()].make_move() 
+                playerList[board.getTurn()].make_move(board) 
             else:
                 print("player turn")
                 print("wir sind hier")
@@ -85,7 +85,7 @@ while not end:
                         break
                     except:
                         print("Invalid input type. Choose Again.")
-                playerList[board.getTurn()].make_move(row, col) 
+                playerList[board.getTurn()].make_move(row, col, board) 
             board.display()
 
         print("The game finished !!!")
@@ -111,7 +111,7 @@ while not end:
         while (counter < rounds):
             print("Round: " + str(counter + 1) + " ---------------------------------------------------------------------------------------")
             while (board.has_won() == 0):
-                playerList[board.getTurn()].make_move() 
+                playerList[board.getTurn()].make_move(board) 
 
             print("The game finished !!!")
             board.display()
@@ -124,5 +124,3 @@ while not end:
             board.reset()
             counter += 1
         end = True
-
-
