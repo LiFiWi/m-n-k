@@ -77,7 +77,6 @@ while not end:
                 playerList[board.getTurn()].make_move(board) 
             else:
                 print("player turn")
-                print("wir sind hier")
                 while True:
                     try:
                         row = int(input("Row Number: "))

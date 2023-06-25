@@ -134,9 +134,9 @@ class Board:
         wonInt = self.checkHorizontal()
         if(wonInt == 0):
             wonInt = self.checkVertical()
-        elif(wonInt == 0):
+        if(wonInt == 0):
             wonInt = self.checkDiagonalTLBR()
-        elif(wonInt == 0):
+        if(wonInt == 0):
             wonInt = self.checkDiagonalBLTR()    
         return wonInt
     
@@ -224,24 +224,4 @@ class Board:
                     if (counter2 == self.kInARow):
                         numberDiagonal = 2
         return numberDiagonal
-
-    def checkDiagonalBLTR(self) -> int:
-        """Returns if winning condition is achieved diagonally from bottom left to top right"""
-        
-        numberDiagonal = 0
-        for i in range(-1, self.nRow - 3):
-            flippedField = np.fliplr(self.field)
-            diagonalArray = np.diagonal(flippedField, i)
-            counter1 = 1 
-            counter2 = 1
-            for j in range(len(diagonalArray) - 1): 
-                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
-                    counter1 += 1
-                    if (counter1 == self.kInARow):
-                        numberDiagonal = 1
-                elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
-                    counter2 += 1
-                    if (counter2 == self.kInARow):
-                        numberDiagonal = 2
-        return numberDiagonal   
 

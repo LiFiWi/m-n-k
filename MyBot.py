@@ -27,17 +27,24 @@ class MyBot(Player):
         #print(row)
         #print(col)
         if self.difficulty_level == 2:
-
-            return super().make_move(row, col, board)
+            if (self.check_in_danger(board) != None):
+                row = self.check_in_danger(board)[0]
+                col = self.check_in_danger(board)[1]
+            else:
+                row = np.random.randint(0, board.nRow)
+                col = np.random.randint(0, board.mCol)
+        return super().make_move(row, col, board)
         
     def check_in_danger(self,board: Board) -> tuple:
         check_danger = None
         check_danger = self.check_in_danger_horizontal(board)
         if check_danger == None:
             check_danger = self.check_in_danger_vertical(board)
-        elif check_danger == None:
+        if check_danger == None:
+            print("TLBR")
             check_danger = self.check_in_danger_TLBR(board)
-        elif check_danger == None:
+        if check_danger == None:
+            print("BLTR")
             check_danger = self.check_in_danger_BLTR(board)
         return check_danger
             
@@ -53,27 +60,92 @@ class MyBot(Player):
             for j in range (board.mCol - 1):
                 if board.field[i,j] == board.field[i, (j + 1)] == check_number:
                     counter1 += 1
-                    if (counter1 == (board.kInARow-2)):
-                        return (i, (j+2)) 
+                    if (counter1 == 2):
+                        if(board.positionExists(i, (j-1)) and board.positionFree(i, (j-1))):
+                            return (i, (j-1))
+                        elif (board.positionExists(i, (j+2)) and board.positionFree(i, (j+2))):
+                            return (i, (j+2))
+                    if (counter1 == 3):
+                        if(board.positionExists(i, (j-2)) and board.positionFree(i, (j-2))):
+                                return (i, (j-2))
+                        elif (board.positionExists(i, (j+2)) and board.positionFree(i, (j+2))):
+                            return (i, (j+2)) 
         return None
     
-    def check_in_danger_vertical(self, board: Board) -> int:
+    def check_in_danger_vertical(self, board: Board) -> tuple:
         if self.player_number == 1:
             check_number = 2
         else:
             check_number = 1
-        for i in range(board.mCol):
+        for j in range(board.mCol):
             counter1 = 1   
-            for j in range (self.nRow-1):
-                if self.field[j, i] == self.field[(j + 1), (i)] == 1:
+            for i in range (board.nRow-1):
+                if board.field[i, j] == board.field[(i + 1), (j)] == 1:
                     counter1 += 1
-                    if (counter1 == self.kInARow):
-                        numberVertical = 1
-                elif self.field[j, i] == self.field[(j+1), (i)] == 2:
-                    counter2 += 1
-                    if (counter2 == self.kInARow):
-                        numberVertical = 2
-        return numberVertical
+                    if (counter1 == 2):
+                        if(board.positionExists((i-1), j) and board.positionFree((i-1), j)):
+                            return ((i-1), j)
+                        elif (board.positionExists((i+2), j) and board.positionFree((i+2), j)):
+                            return ((i+2), j)
+                    if (counter1 == 3):
+                        if(board.positionExists((i-2), j) and board.positionFree((i-2), j)):
+                                return ((i-2), j)
+                        elif (board.positionExists((i+2), j) and board.positionFree((i+2), j)):
+                            return ((i+2), j)
+        return None
+    
+    def check_in_danger_TLBR(self, board: Board) -> tuple:
+        if self.player_number == 1:
+            check_number = 2
+        else:
+            check_number = 1
+        for i in range(-1, board.nRow - 3):
+            diagonalArray = np.diagonal(board.field, i)
+            counter1 = 1 
+            for j in range(len(diagonalArray) - 1): 
+                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
+                    counter1 += 1
+                    print(diagonalArray)
+                    print(counter1)
+                    if (counter1 == 2):
+                        if(board.positionExists((i-1), (j-1)) and board.positionFree((i-1), (j-1))):
+                            print(f"rettung {i} {j}")
+                            return ((i-1), (j-1))
+                        elif (board.positionExists((i+2), (j+2)) and board.positionFree((i+2), (j+2))):
+                            print(f"rettung2 {i} {j}")
+                    if (counter1 == 3):
+                        if(board.positionExists((i-2), (j-2)) and board.positionFree((i-2), (j-2))):
+                                return ((i-2), (j-2))
+                        elif (board.positionExists((i+2), (j+2)) and board.positionFree((i+2), (j+2))):
+                            return ((i+2), (j+2))    
+        return None
+    
+    def check_in_danger_BLTR(self, board: Board) -> tuple:
+        if self.player_number == 1:
+            check_number = 2
+        else:
+            check_number = 1
+        for i in range(-1, board.nRow - 3):
+            flippedField = np.fliplr(board.field)
+            diagonalArray = np.diagonal(flippedField, i)
+            counter1 = 1 
+            for j in range(len(diagonalArray) - 1): 
+                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
+                    counter1 += 1
+                    if (counter1 == 2):
+                        print("erkannt")
+                        if(board.positionExists((i+1), (j-1)) and board.positionFree((i+1), (j-1))):
+                            print((i+1)+(j-1))
+                            return ((i+1), (j-1))
+                        elif (board.positionExists((i-2), (j+2)) and board.positionFree((i-2), (j+2))):
+                            return ((i-2), (j+2))
+                    if (counter1 == 3):
+                        if(board.positionExists((i+2), (j-2)) and board.positionFree((i+2), (j-2))):
+                                return ((i+2), (j-2))
+                        elif (board.positionExists((i-2), (j+2)) and board.positionFree((i-2), (j+2))):
+                            return ((i-2), (j+2))
+        return None
+    
     '''
     Bot Methoden: 
     Check if in danger: checks if enemy has row of k-2
