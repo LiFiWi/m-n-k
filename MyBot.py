@@ -108,16 +108,16 @@ class MyBot(Player):
                     print(diagonalArray)
                     print(counter1)
                     if (counter1 == 2):
-                        if(board.positionExists((i-1), (j-1)) and board.positionFree((i-1), (j-1))):
-                            print(f"rettung {i} {j}")
-                            return ((i-1), (j-1))
-                        elif (board.positionExists((i+2), (j+2)) and board.positionFree((i+2), (j+2))):
-                            print(f"rettung2 {i} {j}")
+                        if(board.positionExists((j-1), (i-1)) and board.positionFree((j-1), (i-1))):
+                            print(f"rettung {j} {i}")
+                            return ((j-1), (i-1))
+                        elif (board.positionExists((j+2), (i+2)) and board.positionFree((j+2), (i+2))):
+                            print(f"rettung2 {j} {i}")
                     if (counter1 == 3):
-                        if(board.positionExists((i-2), (j-2)) and board.positionFree((i-2), (j-2))):
-                                return ((i-2), (j-2))
-                        elif (board.positionExists((i+2), (j+2)) and board.positionFree((i+2), (j+2))):
-                            return ((i+2), (j+2))    
+                        if(board.positionExists((j-2), (i-2)) and board.positionFree((j-2), (i-2))):
+                                return ((j-2), (i-2))
+                        elif (board.positionExists((j+2), (i+2)) and board.positionFree((j+2), (i+2))):
+                            return ((j+2), (i+2))    
         return None
     
     def check_in_danger_BLTR(self, board: Board) -> tuple:
@@ -134,16 +134,16 @@ class MyBot(Player):
                     counter1 += 1
                     if (counter1 == 2):
                         print("erkannt")
-                        if(board.positionExists((i+1), (j-1)) and board.positionFree((i+1), (j-1))):
-                            print((i+1)+(j-1))
-                            return ((i+1), (j-1))
-                        elif (board.positionExists((i-2), (j+2)) and board.positionFree((i-2), (j+2))):
-                            return ((i-2), (j+2))
+                        if(board.positionExists((j+1), (i-1)) and board.positionFree((j+1), (i-1))):
+                            print((j+1)+(i-1))
+                            return ((j+1), (i-1))
+                        elif (board.positionExists((j-2), (i+2)) and board.positionFree((j-2), (i+2))):
+                            return ((j-2), (i+2))
                     if (counter1 == 3):
-                        if(board.positionExists((i+2), (j-2)) and board.positionFree((i+2), (j-2))):
-                                return ((i+2), (j-2))
-                        elif (board.positionExists((i-2), (j+2)) and board.positionFree((i-2), (j+2))):
-                            return ((i-2), (j+2))
+                        if(board.positionExists((j+2), (i-2)) and board.positionFree((j+2), (i-2))):
+                                return ((j+2), (i-2))
+                        elif (board.positionExists((j-2), (i+2)) and board.positionFree((j-2), (i+2))):
+                            return ((j-2), (i+2))
         return None
     
     '''
