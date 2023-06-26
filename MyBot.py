@@ -99,7 +99,7 @@ class MyBot(Player):
             check_number = 2
         else:
             check_number = 1
-        for i in range(-1, board.nRow - 3):
+        for i in range((0-board.nRow), (board.nRow -(board.kInARow-1))):
             diagonalArray = np.diagonal(board.field, i)
             counter1 = 1 
             for j in range(len(diagonalArray) - 1): 
@@ -108,14 +108,29 @@ class MyBot(Player):
                     print(diagonalArray)
                     print(counter1)
                     if (counter1 == 2):
-                        if(board.positionExists((j-1), (i-1)) and board.positionFree((j-1), (i-1))):
-                            print(f"rettung {j} {i}")
-                            return ((j-1), (i-1))
-                        elif (board.positionExists((j+2), (i+2)) and board.positionFree((j+2), (i+2))):
-                            print(f"rettung2 {j} {i}")
+                        k = abs(i) + (j-1)
+                        if(board.positionExists((j-1), (k)) and board.positionFree((j-1), (k))):
+                            print(i)
+                            print(f"rettung {j} {k}")
+                            print(board.positionExists((j-1), (k)))
+                            print(board.positionFree((j-1), (k)))
+                            print(i)
+                            if i >= 0:
+                                return ((j-1), (k))
+                            if i < 0:
+                                return ((k), (j-1))
+                        elif (board.positionExists((j+2), (k+3)) and board.positionFree((j+2), (k+3))):
+                            print(i)
+                            print(f"rettung2 {j+2} {k+3}")
+                            if i >= 0:
+                                return ((j+2), (k+3))
+                            if i < 0:
+                                print(k+3)
+                                print(j+2)
+                                return ((k+3), (j+2))
                     if (counter1 == 3):
-                        if(board.positionExists((j-2), (i-2)) and board.positionFree((j-2), (i-2))):
-                                return ((j-2), (i-2))
+                        if(board.positionExists((j-2), (k-1)) and board.positionFree((j-2), (k-1))):
+                                return ((j-2), (k-1))
                         elif (board.positionExists((j+2), (i+2)) and board.positionFree((j+2), (i+2))):
                             return ((j+2), (i+2))    
         return None
@@ -125,7 +140,7 @@ class MyBot(Player):
             check_number = 2
         else:
             check_number = 1
-        for i in range(-1, board.nRow - 3):
+        for i in range((0-board.nRow), (board.nRow -(board.kInARow-1))):
             flippedField = np.fliplr(board.field)
             diagonalArray = np.diagonal(flippedField, i)
             counter1 = 1 
@@ -133,7 +148,6 @@ class MyBot(Player):
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
                     if (counter1 == 2):
-                        print("erkannt")
                         if(board.positionExists((j+1), (i-1)) and board.positionFree((j+1), (i-1))):
                             print((j+1)+(i-1))
                             return ((j+1), (i-1))

@@ -20,7 +20,7 @@ class Game:
 #initializing board
 while True: 
     try: 
-        NumberRows = int(input("Number of Rows: "))        
+        NumberRows = int(input("Number of Rows: "))
         break
     except:
         print("Invalid input type. Choose again.")

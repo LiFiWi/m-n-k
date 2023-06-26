@@ -190,7 +190,7 @@ class Board:
         """Returns if winning condition is achieved diagonally from top left to bottom right"""
         
         numberDiagonal = 0
-        for i in range(-1, self.nRow - 3):
+        for i in range((0-(self.nRow-1)), (self.nRow - (self.kInARow-1))):
             diagonalArray = np.diagonal(self.field, i)
             counter1 = 1 
             counter2 = 1
