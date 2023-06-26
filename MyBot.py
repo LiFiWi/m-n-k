@@ -109,30 +109,31 @@ class MyBot(Player):
                     print(counter1)
                     if (counter1 == 2):
                         k = abs(i) + (j-1)
-                        if(board.positionExists((j-1), (k)) and board.positionFree((j-1), (k))):
-                            print(i)
-                            print(f"rettung {j} {k}")
-                            print(board.positionExists((j-1), (k)))
-                            print(board.positionFree((j-1), (k)))
-                            print(i)
-                            if i >= 0:
+                        if i >= 0:
+                            if (board.positionExists((j-1), (k)) and board.positionFree((j-1), (k))):
                                 return ((j-1), (k))
-                            if i < 0:
-                                return ((k), (j-1))
-                        elif (board.positionExists((j+2), (k+3)) and board.positionFree((j+2), (k+3))):
-                            print(i)
-                            print(f"rettung2 {j+2} {k+3}")
-                            if i >= 0:
+                            elif (board.positionExists((j+2), (k+3)) and board.positionFree((j+2), (k+3))):
                                 return ((j+2), (k+3))
-                            if i < 0:
-                                print(k+3)
-                                print(j+2)
+                        if i < 0:
+                            if (board.positionExists((k), (j-1)) and board.positionFree((k), (j-1))):
+                                return ((k), (j-1))
+                            elif (board.positionExists((k+3), (j+2)) and board.positionFree((k+3), (j+2))):
                                 return ((k+3), (j+2))
                     if (counter1 == 3):
-                        if(board.positionExists((j-2), (k-1)) and board.positionFree((j-2), (k-1))):
+                        print("333333333333")
+                        print(i)
+                        print(f"rettung {j} {k}")
+                        print(i)
+                        if i >= 0:
+                            if (board.positionExists((j-2), (k-1)) and board.positionFree((j-2), (k-1))):
                                 return ((j-2), (k-1))
-                        elif (board.positionExists((j+2), (i+2)) and board.positionFree((j+2), (i+2))):
-                            return ((j+2), (i+2))    
+                            elif (board.positionExists((j+2), (k+4)) and board.positionFree((j+2), (k+4))):
+                                return ((j+2), (k+4)) 
+                            if i < 0:
+                                if (board.positionExists((k-1), (j-2)) and board.positionFree((k-1), (j-2))):
+                                    return ((k-1), (j-2))
+                                elif (board.positionExists((k+3), (j+2)) and board.positionFree((k+3), (j+2))):
+                                    return ((k+3), (j+2))    
         return None
     
     def check_in_danger_BLTR(self, board: Board) -> tuple:
