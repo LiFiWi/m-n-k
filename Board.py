@@ -7,7 +7,7 @@ class Board:
     mCol = None
     kInARow = None 
     field = None 
-    flipped = None
+    flippedField = None
 
     takeTurn = 0
 
@@ -24,7 +24,7 @@ class Board:
         self.mCol = m
         self.kInARow = k 
         self.field = np.full([n, m], 0)
-        self.flipped = False
+        self.flippedField = np.fliplr(self.field)
 
     
     def reset(self) -> None:
@@ -227,6 +227,6 @@ class Board:
                         numberDiagonal = 2
         return numberDiagonal
 
-    def flip(self) -> None: 
+    '''def flip(self) -> None: 
         self.field = np.fliplr(self.field)
-        self.flipped = not self.flipped
+        self.flipped = not self.flipped'''
