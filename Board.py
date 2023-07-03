@@ -7,6 +7,7 @@ class Board:
     mCol = None
     kInARow = None 
     field = None 
+    flipped = None
 
     takeTurn = 0
 
@@ -23,6 +24,8 @@ class Board:
         self.mCol = m
         self.kInARow = k 
         self.field = np.full([n, m], 0)
+        self.flipped = False
+
     
     def reset(self) -> None:
         """Resets the board's fields to default (0)."""
@@ -108,7 +111,7 @@ class Board:
         else:
             #print("position not free")
             return False
-
+        
     def positionExists(self, row: int, col: int) -> bool:
         '''
         Checks if Position exists. Returns boolean
@@ -126,7 +129,6 @@ class Board:
         else:
             #print("position exists")
             return True
-
             
     def has_won(self) -> int:
         if not (0 in np.unique(self.field)): 
@@ -225,3 +227,6 @@ class Board:
                         numberDiagonal = 2
         return numberDiagonal
 
+    def flip(self) -> None: 
+        self.field = np.fliplr(self.field)
+        self.flipped = not self.flipped

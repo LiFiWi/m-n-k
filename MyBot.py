@@ -105,62 +105,76 @@ class MyBot(Player):
             for j in range(len(diagonalArray) - 1): 
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
-                    print(diagonalArray)
-                    print(counter1)
+                    offsetAbsoluteValue = abs(i) + (j-1)
                     if (counter1 == 2):
-                        k = abs(i) + (j-1)
                         if i >= 0:
-                            if (board.positionExists((j-1), (k)) and board.positionFree((j-1), (k))):
-                                return ((j-1), (k))
-                            elif (board.positionExists((j+2), (k+3)) and board.positionFree((j+2), (k+3))):
-                                return ((j+2), (k+3))
+                            if (board.positionExists((j-1), (offsetAbsoluteValue)) and board.positionFree((j-1), (offsetAbsoluteValue))):
+                                return ((j-1), (offsetAbsoluteValue))
+                            elif (board.positionExists((j+2), (offsetAbsoluteValue+3)) and board.positionFree((j+2), (offsetAbsoluteValue+3))):
+                                return ((j+2), (offsetAbsoluteValue+3))
                         if i < 0:
-                            if (board.positionExists((k), (j-1)) and board.positionFree((k), (j-1))):
-                                return ((k), (j-1))
-                            elif (board.positionExists((k+3), (j+2)) and board.positionFree((k+3), (j+2))):
-                                return ((k+3), (j+2))
+                            if (board.positionExists((offsetAbsoluteValue), (j-1)) and board.positionFree((offsetAbsoluteValue), (j-1))):
+                                return ((offsetAbsoluteValue), (j-1))
+                            elif (board.positionExists((offsetAbsoluteValue+3), (j+2)) and board.positionFree((offsetAbsoluteValue+3), (j+2))):
+                                return ((offsetAbsoluteValue+3), (j+2))
                     if (counter1 == 3):
-                        print("333333333333")
-                        print(i)
-                        print(f"rettung {j} {k}")
-                        print(i)
                         if i >= 0:
-                            if (board.positionExists((j-2), (k-1)) and board.positionFree((j-2), (k-1))):
-                                return ((j-2), (k-1))
-                            elif (board.positionExists((j+2), (k+4)) and board.positionFree((j+2), (k+4))):
-                                return ((j+2), (k+4)) 
+                            if (board.positionExists((j-2), (offsetAbsoluteValue-1)) and board.positionFree((j-2), (offsetAbsoluteValue-1))):
+                                return ((j-2), (offsetAbsoluteValue-1))
+                            elif (board.positionExists((j+2), (offsetAbsoluteValue+4)) and board.positionFree((j+2), (offsetAbsoluteValue+4))):
+                                return ((j+2), (offsetAbsoluteValue+4)) 
                             if i < 0:
-                                if (board.positionExists((k-1), (j-2)) and board.positionFree((k-1), (j-2))):
-                                    return ((k-1), (j-2))
-                                elif (board.positionExists((k+3), (j+2)) and board.positionFree((k+3), (j+2))):
-                                    return ((k+3), (j+2))    
+                                if (board.positionExists((offsetAbsoluteValue-1), (j-2)) and board.positionFree((offsetAbsoluteValue-1), (j-2))):
+                                    return ((offsetAbsoluteValue-1), (j-2))
+                                elif (board.positionExists((offsetAbsoluteValue+3), (j+2)) and board.positionFree((offsetAbsoluteValue+3), (j+2))):
+                                    return ((offsetAbsoluteValue+3), (j+2))    
         return None
     
     def check_in_danger_BLTR(self, board: Board) -> tuple:
+        board.flip()
         if self.player_number == 1:
             check_number = 2
         else:
             check_number = 1
         for i in range((0-board.nRow), (board.nRow -(board.kInARow-1))):
-            flippedField = np.fliplr(board.field)
-            diagonalArray = np.diagonal(flippedField, i)
+            diagonalArray = np.diagonal(board.field, i)
             counter1 = 1 
             for j in range(len(diagonalArray) - 1): 
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
+                    offsetAbsoluteValue = abs(i) + (j-1)
+                    print(counter1)
                     if (counter1 == 2):
-                        if(board.positionExists((j+1), (i-1)) and board.positionFree((j+1), (i-1))):
-                            print((j+1)+(i-1))
-                            return ((j+1), (i-1))
-                        elif (board.positionExists((j-2), (i+2)) and board.positionFree((j-2), (i+2))):
-                            return ((j-2), (i+2))
+                        if i >= 0:
+                            if (board.positionExists((j-1), (offsetAbsoluteValue)) and board.positionFree((j-1), (offsetAbsoluteValue))):
+                                return ((j-1), self.fromFlippedToNonFlipped(offsetAbsoluteValue, board))
+                            elif (board.positionExists((j+2), (offsetAbsoluteValue+3)) and board.positionFree((j+2), (offsetAbsoluteValue+3))):
+                                return ((j+2), self.fromFlippedToNonFlipped((offsetAbsoluteValue+3), board))
+                        if i < 0:
+                            if (board.positionExists((offsetAbsoluteValue), (j-1)) and board.positionFree((offsetAbsoluteValue), (j-1))):
+                                return ((offsetAbsoluteValue), self.fromFlippedToNonFlipped((j-1), board))
+                            elif (board.positionExists((offsetAbsoluteValue+3), (j+2)) and board.positionFree((offsetAbsoluteValue+3), (j+2))):
+                                return ((offsetAbsoluteValue+3), self.fromFlippedToNonFlipped((j+2), board))
                     if (counter1 == 3):
-                        if(board.positionExists((j+2), (i-2)) and board.positionFree((j+2), (i-2))):
-                                return ((j+2), (i-2))
-                        elif (board.positionExists((j-2), (i+2)) and board.positionFree((j-2), (i+2))):
-                            return ((j-2), (i+2))
+                        if i >= 0:
+                            if (board.positionExists((j-2), (offsetAbsoluteValue-1)) and board.positionFree((j-2), (offsetAbsoluteValue-1))):
+                                return ((j-2), self.fromFlippedToNonFlipped((offsetAbsoluteValue-1), board))
+                            elif (board.positionExists((j+2), (offsetAbsoluteValue+4)) and board.positionFree((j+2), (offsetAbsoluteValue+4))):
+                                return ((j+2), self.fromFlippedToNonFlipped((offsetAbsoluteValue+4), board)) 
+                            if i < 0:
+                                if (board.positionExists((offsetAbsoluteValue-1), (j-2)) and board.positionFree((offsetAbsoluteValue-1), (j-2))):
+                                    return ((offsetAbsoluteValue-1), self.fromFlippedToNonFlipped((j-2), board))
+                                elif (board.positionExists((offsetAbsoluteValue+3), (j+2)) and board.positionFree((offsetAbsoluteValue+3), (j+2))):
+                                    return ((offsetAbsoluteValue+3), self.fromFlippedToNonFlipped((j+2), board))
+        board.flip()
+        print(board.flipped)
         return None
     
+    def fromFlippedToNonFlipped(flippedCol: int, board: Board) -> tuple:
+        col = Board.mCol - flippedCol
+        return (col)
+
+
     '''
     Bot Methoden: 
     Check if in danger: checks if enemy has row of k-2
