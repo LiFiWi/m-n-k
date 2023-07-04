@@ -226,6 +226,9 @@ class Board:
                     if (counter2 == self.kInARow):
                         numberDiagonal = 2
         return numberDiagonal
+    
+    def position_valid(self, row: int, col: int) -> bool:
+        return (self.positionExists(row, col) and self.positionFree(row, col))
 
     '''def flip(self) -> None: 
         self.field = np.fliplr(self.field)

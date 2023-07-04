@@ -104,28 +104,7 @@ class MyBot(Player):
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
                     offsetAbsoluteValue = abs(i) + (j-1)
-                    if counter1 == 2:
-                        if i >= 0:
-                            if (board.positionExists((j-1), (offsetAbsoluteValue)) and board.positionFree((j-1), (offsetAbsoluteValue))):
-                                return ((j-1), (offsetAbsoluteValue))
-                            elif (board.positionExists((j+2), (offsetAbsoluteValue+3)) and board.positionFree((j+2), (offsetAbsoluteValue+3))):
-                                return ((j+2), (offsetAbsoluteValue+3))
-                        if i < 0:
-                            if (board.positionExists((offsetAbsoluteValue), (j-1)) and board.positionFree((offsetAbsoluteValue), (j-1))):
-                                return ((offsetAbsoluteValue), (j-1))
-                            elif (board.positionExists((offsetAbsoluteValue+3), (j+2)) and board.positionFree((offsetAbsoluteValue+3), (j+2))):
-                                return ((offsetAbsoluteValue+3), (j+2))
-                    if counter1 == 3:
-                        if i >= 0:
-                            if (board.positionExists((j-2), (offsetAbsoluteValue-1)) and board.positionFree((j-2), (offsetAbsoluteValue-1))):
-                                return ((j-2), (offsetAbsoluteValue-1))
-                            elif (board.positionExists((j+2), (offsetAbsoluteValue+4)) and board.positionFree((j+2), (offsetAbsoluteValue+4))):
-                                return ((j+2), (offsetAbsoluteValue+4)) 
-                            if i < 0:
-                                if (board.positionExists((offsetAbsoluteValue-1), (j-2)) and board.positionFree((offsetAbsoluteValue-1), (j-2))):
-                                    return ((offsetAbsoluteValue-1), (j-2))
-                                elif (board.positionExists((offsetAbsoluteValue+3), (j+2)) and board.positionFree((offsetAbsoluteValue+3), (j+2))):
-                                    return ((offsetAbsoluteValue+3), (j+2))    
+                    return self.make_defending_move_TLBR(counter1, i, offsetAbsoluteValue, j , board)    
         return None
     
     def check_in_danger_BLTR(self, board: Board) -> tuple:
@@ -140,34 +119,61 @@ class MyBot(Player):
                 if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
                     counter1 += 1
                     offsetAbsoluteValue = abs(i) + (j-1)
-                    if counter1 == 2:
-                        if i >= 0:
-                            if (board.positionExists((j-1), (self.fromFlippedToNonFlipped(offsetAbsoluteValue, board)-1)) and board.positionFree((j-1), (self.fromFlippedToNonFlipped(offsetAbsoluteValue, board)-1))):
-                                return ((j-1), (self.fromFlippedToNonFlipped(offsetAbsoluteValue, board)-1))
-                            elif (board.positionExists((j+2), (self.fromFlippedToNonFlipped((offsetAbsoluteValue+3), board)-1)) and board.positionFree((j+2), (self.fromFlippedToNonFlipped((offsetAbsoluteValue+3), board)-1))):
-                                return ((j+2), (self.fromFlippedToNonFlipped((offsetAbsoluteValue+3), board)-1))
-                        if i < 0:
-                            if (board.positionExists((offsetAbsoluteValue), (self.fromFlippedToNonFlipped((j-1), board)-1)) and board.positionFree((offsetAbsoluteValue), (self.fromFlippedToNonFlipped((j-1), board)-1))):
-                                return ((offsetAbsoluteValue), (self.fromFlippedToNonFlipped((j-1), board)-1))
-                            elif (board.positionExists((offsetAbsoluteValue+3), (self.fromFlippedToNonFlipped((j+2), board)-1)) and board.positionFree((offsetAbsoluteValue+3), (self.fromFlippedToNonFlipped((j+2), board)-1))):
-                                return ((offsetAbsoluteValue+3), (self.fromFlippedToNonFlipped((j+2), board)-1))
-                    if counter1 == 3:
-                        if i >= 0:
-                            if (board.positionExists((j-2), (self.fromFlippedToNonFlipped((offsetAbsoluteValue-1), board)-1)) and board.positionFree((j-2), (self.fromFlippedToNonFlipped((offsetAbsoluteValue-1), board)-1))):
-                                return ((j-2), (self.fromFlippedToNonFlipped((offsetAbsoluteValue-1), board)-1))
-                            elif (board.positionExists((j+2), self.fromFlippedToNonFlipped((offsetAbsoluteValue+4), board)) and board.positionFree((j+2), self.fromFlippedToNonFlipped((offsetAbsoluteValue+4), board))):
-                                return ((j+2), self.fromFlippedToNonFlipped((offsetAbsoluteValue+4), board)) 
-                        if i < 0:
-                            if  board.positionExists((self.fromFlippedToNonFlipped((j-2), board)-1), (offsetAbsoluteValue-1)) and board.positionFree((self.fromFlippedToNonFlipped((j-2), board)-1), (offsetAbsoluteValue-1)):
-                                return ((self.fromFlippedToNonFlipped((j-2), board)-1), (offsetAbsoluteValue-1))
-                            elif board.positionExists((offsetAbsoluteValue+3), self.fromFlippedToNonFlipped((j+2), board)) and board.positionFree((offsetAbsoluteValue+3), self.fromFlippedToNonFlipped((j+2), board)):
-                                return ((offsetAbsoluteValue+3), self.fromFlippedToNonFlipped((j+2), board))
+                    return self.make_defending_move_BLTR(counter1, i, offsetAbsoluteValue, j, board)
         return None
     
     def fromFlippedToNonFlipped(self, flippedCol: int, board: Board) -> int:
             return (board.mCol - flippedCol)
 
-
+    def make_defending_move_TLBR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
+        if counter == 2:
+            if offset_horizontal >= 0:
+                if (board.positionExists((offset_vertical-1), (offset_absolute)) and board.positionFree((offset_vertical-1), (offset_absolute))):
+                    return ((offset_vertical-1), (offset_absolute))
+                elif (board.positionExists((offset_vertical+2), (offset_absolute+3)) and board.positionFree((offset_vertical+2), (offset_absolute+3))):
+                    return ((offset_vertical+2), (offset_absolute+3))
+            if offset_horizontal < 0:
+                if (board.positionExists((offset_absolute), (offset_vertical-1)) and board.positionFree((offset_absolute), (offset_vertical-1))):
+                    return ((offset_absolute), (offset_vertical-1))
+                elif (board.positionExists((offset_absolute+3), (offset_vertical+2)) and board.positionFree((offset_absolute+3), (offset_vertical+2))):
+                    return ((offset_absolute+3), (offset_vertical+2))
+        if counter == 3:
+            if offset_horizontal >= 0:
+                if (board.positionExists((offset_vertical-2), (offset_absolute-1)) and board.positionFree((offset_vertical-2), (offset_absolute-1))):
+                    return ((offset_vertical-2), (offset_absolute-1))
+                elif (board.positionExists((offset_vertical+2), (offset_absolute)) and board.positionFree((offset_vertical+2), (offset_absolute+3))):
+                    return ((offset_vertical+2), (offset_absolute+3)) 
+            if offset_horizontal < 0:
+                if (board.positionExists((offset_absolute-1), (offset_vertical-2)) and board.positionFree((offset_absolute-1), (offset_vertical-2))):
+                    return ((offset_absolute-1), (offset_vertical-2))
+                elif (board.positionExists((offset_absolute+3), (offset_vertical+2)) and board.positionFree((offset_absolute+3), (offset_vertical+2))):
+                    return ((offset_absolute+3), (offset_vertical+2))
+        return None
+    
+    def make_defending_move_BLTR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
+        if counter == 2:
+            if offset_horizontal >= 0:
+                if board.position_valid((offset_vertical-1), (self.fromFlippedToNonFlipped(offset_absolute, board)-1)):
+                    return ((offset_vertical-1), (self.fromFlippedToNonFlipped(offset_absolute, board)-1))
+                elif board.position_valid((offset_vertical+2), (self.fromFlippedToNonFlipped((offset_absolute+3), board)-1)):
+                    return ((offset_vertical+2), (self.fromFlippedToNonFlipped((offset_absolute+3), board)-1))
+            if offset_horizontal < 0:
+                if board.position_valid((offset_absolute), (self.fromFlippedToNonFlipped((offset_vertical-1), board)-1)):
+                    return ((offset_absolute), (self.fromFlippedToNonFlipped((offset_vertical-1), board)-1))
+                elif board.position_valid((offset_absolute+3), (self.fromFlippedToNonFlipped((offset_vertical+2), board)-1)):
+                    return ((offset_absolute+3), (self.fromFlippedToNonFlipped((offset_vertical+2), board)-1))
+        if counter == 3:
+            if offset_horizontal >= 0:
+                if board.position_valid((offset_vertical-2), (self.fromFlippedToNonFlipped((offset_absolute-1), board)-1)):
+                    return ((offset_vertical-2), (self.fromFlippedToNonFlipped((offset_absolute-1), board)-1))
+                elif board.position_valid((offset_vertical+2), self.fromFlippedToNonFlipped((offset_absolute+4), board)):
+                    return ((offset_vertical+2), self.fromFlippedToNonFlipped((offset_absolute+4), board)) 
+            if offset_horizontal < 0:
+                if  board.position_valid((self.fromFlippedToNonFlipped((offset_vertical-2), board)-1), (offset_absolute-1)):
+                    return ((self.fromFlippedToNonFlipped((offset_vertical-2), board)-1), (offset_absolute-1))
+                elif board.position_valid((offset_absolute+3), self.fromFlippedToNonFlipped((offset_vertical+2), board)):
+                    return ((offset_absolute+3), self.fromFlippedToNonFlipped((offset_vertical+2), board))
+    
     '''
     Bot Methoden: 
     Check if in danger: checks if enemy has row of k-2
@@ -175,4 +181,3 @@ class MyBot(Player):
     Muster erkennen(Reihe eigene)
     Zwickmühle bauen
     '''
-    #def check_in_danger(self) -> tuple:
