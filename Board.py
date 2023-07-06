@@ -7,6 +7,7 @@ class Board:
     mCol = None
     kInARow = None 
     field = None 
+    flippedField = None
 
     takeTurn = 0
 
@@ -23,6 +24,8 @@ class Board:
         self.mCol = m
         self.kInARow = k 
         self.field = np.full([n, m], 0)
+        self.flippedField = np.fliplr(self.field)
+
     
     def reset(self) -> None:
         """Resets the board's fields to default (0)."""
@@ -108,7 +111,7 @@ class Board:
         else:
             #print("position not free")
             return False
-
+        
     def positionExists(self, row: int, col: int) -> bool:
         '''
         Checks if Position exists. Returns boolean
@@ -126,7 +129,6 @@ class Board:
         else:
             #print("position exists")
             return True
-
             
     def has_won(self) -> int:
         if not (0 in np.unique(self.field)): 
@@ -134,9 +136,9 @@ class Board:
         wonInt = self.checkHorizontal()
         if(wonInt == 0):
             wonInt = self.checkVertical()
-        elif(wonInt == 0):
+        if(wonInt == 0):
             wonInt = self.checkDiagonalTLBR()
-        elif(wonInt == 0):
+        if(wonInt == 0):
             wonInt = self.checkDiagonalBLTR()    
         return wonInt
     
@@ -190,7 +192,7 @@ class Board:
         """Returns if winning condition is achieved diagonally from top left to bottom right"""
         
         numberDiagonal = 0
-        for i in range(-1, self.nRow - 3):
+        for i in range((0-(self.nRow-1)), (self.nRow - (self.kInARow-1))):
             diagonalArray = np.diagonal(self.field, i)
             counter1 = 1 
             counter2 = 1
@@ -224,24 +226,10 @@ class Board:
                     if (counter2 == self.kInARow):
                         numberDiagonal = 2
         return numberDiagonal
+    
+    def position_valid(self, row: int, col: int) -> bool:
+        return (self.positionExists(row, col) and self.positionFree(row, col))
 
-    def checkDiagonalBLTR(self) -> int:
-        """Returns if winning condition is achieved diagonally from bottom left to top right"""
-        
-        numberDiagonal = 0
-        for i in range(-1, self.nRow - 3):
-            flippedField = np.fliplr(self.field)
-            diagonalArray = np.diagonal(flippedField, i)
-            counter1 = 1 
-            counter2 = 1
-            for j in range(len(diagonalArray) - 1): 
-                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
-                    counter1 += 1
-                    if (counter1 == self.kInARow):
-                        numberDiagonal = 1
-                elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
-                    counter2 += 1
-                    if (counter2 == self.kInARow):
-                        numberDiagonal = 2
-        return numberDiagonal   
-
+    '''def flip(self) -> None: 
+        self.field = np.fliplr(self.field)
+        self.flipped = not self.flipped'''
