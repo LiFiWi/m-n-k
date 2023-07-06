@@ -38,20 +38,18 @@ class Board:
 
     def create_top_border(self) -> str:
         """Returns a string that displays the board's columns."""
-        top_border = "  │ "
-        if(self.m_col <= 10):
-            for i in range(self.m_col):
-                top_border += str(i) + " │ "
-        else:
-            for i in range(10):
-                top_border += str(i) + " │ "
-            for i in range(10,self.m_col):
-                top_border += str(i) + "│ "
-        return(top_border)
+        whitespace = len(str(self.m_col))
+        top_border = whitespace * " " + " │ "
+
+        for i in range(self.m_col):
+            top_border += str(i) + " │" + " " * (whitespace - len(str(i + 1 ))) 
+        return top_border
+
 
     def create_board_row(self, row_index: int) -> str:
         """Returns a string that displays the board's rows including the field itself."""
-        row = str(row_index) + " │ "
+        whitespace = len(str(self.n_row))
+        row = str(row_index) + (" " * (whitespace - len(str(row_index)))) +" │ "        
         for j in range(len(self.field.tolist()[row_index])):
             row += self.visualize_number(self.field.tolist()[row_index][j]) + " │ "
         return(row)
@@ -69,9 +67,10 @@ class Board:
         print(self.create_top_border())
         print(self.create_border())
         #Board
+
         for i in range(len(field_list)):
-            row = str(i) + " | "
             print(self.create_board_row(i))
+
         #Bottom Border
         print(self.create_border())
         
@@ -229,3 +228,7 @@ class Board:
     
     def position_valid(self, row: int, col: int) -> bool:
         return (self.position_exists(row, col) and self.position_free(row, col))
+
+
+b = Board(22, 20, 3)
+b.display()
