@@ -2,14 +2,14 @@ import numpy as np
 
 class Board:
     # n Zeilen, äußere Arrays
-    nRow = None 
+    n_row = None 
     # m Spalten - Elemente in den inneren Arrays
-    mCol = None
-    kInARow = None 
+    m_col = None
+    k_in_a_row = None 
     field = None 
-    flippedField = None
+    flipped_field = None
 
-    takeTurn = 0
+    your_turn = 0
 
     def __init__(self, n = 5, m = 5,  k = 4) -> None:
         '''
@@ -20,62 +20,62 @@ class Board:
                         m(int): Board's number of columns
                         k(int): length of the row needed to win         
         '''
-        self.nRow = n
-        self.mCol = m
-        self.kInARow = k 
+        self.n_row = n
+        self.m_col = m
+        self.k_in_a_row = k 
         self.field = np.full([n, m], 0)
-        self.flippedField = np.fliplr(self.field)
+        self.flipped_field = np.fliplr(self.field)
 
     
     def reset(self) -> None:
         """Resets the board's fields to default (0)."""
         self.field.fill(0)
-        self.takeTurn = 0
+        self.take_turn = 0
         
-    def fillUp(self, number: int) -> None:
+    def fill_up(self, number: int) -> None:
         """Fills the Board's fields with the given player_number."""
         self.field.fill(number)
 
-    def createTopBorder(self) -> str:
+    def create_top_border(self) -> str:
         """Returns a string that displays the board's columns."""
-        topBorder = "  │ "
-        if(self.mCol <= 10):
-            for i in range(self.mCol):
-                topBorder += str(i) + " │ "
+        top_border = "  │ "
+        if(self.m_col <= 10):
+            for i in range(self.m_col):
+                top_border += str(i) + " │ "
         else:
             for i in range(10):
-                topBorder += str(i) + " │ "
-            for i in range(10,self.mCol):
-                topBorder += str(i) + "│ "
-        return(topBorder)
+                top_border += str(i) + " │ "
+            for i in range(10,self.m_col):
+                top_border += str(i) + "│ "
+        return(top_border)
 
-    def createBoardRow(self, rowIndex: int) -> str:
+    def create_board_row(self, row_index: int) -> str:
         """Returns a string that displays the board's rows including the field itself."""
-        row = str(rowIndex) + " │ "
-        for j in range(len(self.field.tolist()[rowIndex])):
-            row += self.visualizeNumber(self.field.tolist()[rowIndex][j]) + " │ "
+        row = str(row_index) + " │ "
+        for j in range(len(self.field.tolist()[row_index])):
+            row += self.visualize_number(self.field.tolist()[row_index][j]) + " │ "
         return(row)
 
-    def createBorder(self) -> str:
+    def create_border(self) -> str:
         """Returns a string that is a dotted line, matching the board's length."""
-        return((len(self.createBoardRow(0)) - 1) * "-")
+        return((len(self.create_board_row(0)) - 1) * "-")
 
     def display(self) -> None:
-        """Returns the Board as a complete string."""
+        """Prints a visualized version of the board."""
         field_list = self.field.tolist()        
         #Information
-        print(self.toString())
+        print(self.to_string())
         #Top Border
-        print(self.createTopBorder())
-        print(self.createBorder())
+        print(self.create_top_border())
+        print(self.create_border())
         #Board
         for i in range(len(field_list)):
             row = str(i) + " | "
-            print(self.createBoardRow(i))
+            print(self.create_board_row(i))
         #Bottom Border
-        print(self.createBorder())
+        print(self.create_border())
         
-    def visualizeNumber(self, number: int) -> str:
+    def visualize_number(self, number: int) -> str:
         '''
         Visualizes player_number to either O, X or simple gap. Returns a string.
 
@@ -94,7 +94,7 @@ class Board:
         else:
             return " "
 
-    def positionFree(self, row: int, col: int) -> bool:
+    def position_free(self, row: int, col: int) -> bool:
         '''
         Checks if Position is free. Returns boolean
 
@@ -112,7 +112,7 @@ class Board:
             #print("position not free")
             return False
         
-    def positionExists(self, row: int, col: int) -> bool:
+    def position_exists(self, row: int, col: int) -> bool:
         '''
         Checks if Position exists. Returns boolean
 
@@ -123,7 +123,7 @@ class Board:
                 Returns: 
                         Returns if field exists as a boolean
         '''
-        if self.nRow <= row or row < 0 or self.mCol <= col or col < 0:
+        if self.n_row <= row or row < 0 or self.m_col <= col or col < 0:
             #print("position doesnt exist")
             return False
         else:
@@ -133,103 +133,99 @@ class Board:
     def has_won(self) -> int:
         if not (0 in np.unique(self.field)): 
             return -1
-        wonInt = self.checkHorizontal()
+        wonInt = self.check_horizontal()
         if(wonInt == 0):
-            wonInt = self.checkVertical()
+            wonInt = self.check_vertical()
         if(wonInt == 0):
-            wonInt = self.checkDiagonalTLBR()
+            wonInt = self.check_diagonal_TLBR()
         if(wonInt == 0):
-            wonInt = self.checkDiagonalBLTR()    
+            wonInt = self.check_diagonal_BLTR()    
         return wonInt
     
     def take_turn(self): 
-        self.takeTurn = (self.takeTurn + 1) % 2
+        self.your_turn = (self.your_turn + 1) % 2
     
-    def getTurn(self) -> int:
-        return self.takeTurn 
+    def get_turn(self) -> int:
+        return self.your_turn
 
-    def toString(self) -> str:
+    def to_string(self) -> str:
         """Returns the number of columns and rows and the needed span of fields to win."""
-        return ("mCol: " + str(self.mCol) + '\n'+ "nRow: " + str(self.nRow) + '\n' + "kInRow: " + str(self.kInARow) )
+        return ("m_col: " + str(self.m_col) + '\n'+ "n_row: " + str(self.n_row) + '\n' + "k_in_a_row: " + str(self.k_in_a_row) )
 
-    def checkHorizontal(self) -> int:
+    def check_horizontal(self) -> int:
         """Returns if winning condition is achieved horizontally."""
 
-        numberHorizontal = 0
-        for i in range(self.nRow):
+        number_horizontal = 0
+        for i in range(self.n_row):
             counter1 = 1
             counter2 = 1    
-            for j in range (self.mCol - 1):
+            for j in range (self.m_col - 1):
                 if self.field[i,j] == self.field[i, (j + 1)] == 1:
                     counter1 += 1
-                    if (counter1 == self.kInARow):
-                        numberHorizontal = 1
+                    if (counter1 == self.k_in_a_row):
+                        number_horizontal = 1
                 elif self.field[i , j] == self.field[i, (j + 1)] == 2:
                     counter2 += 1
-                    if (counter2 == self.kInARow):
-                        numberHorizontal = 2 
-        return numberHorizontal       
+                    if (counter2 == self.k_in_a_row):
+                        number_horizontal = 2 
+        return number_horizontal       
             
-    def checkVertical(self) -> int:
+    def check_vertical(self) -> int:
         """Returns if winning condition is achieved vertically."""
         
-        numberVertical = 0
-        for i in range(self.mCol):
+        number_vertical = 0
+        for i in range(self.m_col):
             counter1 = 1
             counter2 = 1    
-            for j in range (self.nRow-1):
+            for j in range (self.n_row -1):
                 if self.field[j, i] == self.field[(j + 1), (i)] == 1:
                     counter1 += 1
-                    if (counter1 == self.kInARow):
-                        numberVertical = 1
+                    if (counter1 == self.k_in_a_row):
+                        number_vertical = 1
                 elif self.field[j, i] == self.field[(j+1), (i)] == 2:
                     counter2 += 1
-                    if (counter2 == self.kInARow):
-                        numberVertical = 2
-        return numberVertical
+                    if (counter2 == self.k_in_a_row):
+                        number_vertical = 2
+        return number_vertical
     
-    def checkDiagonalTLBR(self) -> int:
+    def check_diagonal_TLBR(self) -> int:
         """Returns if winning condition is achieved diagonally from top left to bottom right"""
         
-        numberDiagonal = 0
-        for i in range((0-(self.nRow-1)), (self.nRow - (self.kInARow-1))):
-            diagonalArray = np.diagonal(self.field, i)
+        number_diagonal = 0
+        for i in range((0-(self.n_row - 1)), (self.n_row - (self.k_in_a_row - 1))):
+            diagonal_array = np.diagonal(self.field, i)
             counter1 = 1 
             counter2 = 1
-            for j in range(len(diagonalArray) - 1): 
-                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
+            for j in range(len(diagonal_array) - 1): 
+                if diagonal_array[j] == diagonal_array[(j + 1)] == 1:
                     counter1 += 1
-                    if (counter1 == self.kInARow):
-                        numberDiagonal = 1
-                elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
+                    if (counter1 == self.k_in_a_row):
+                        number_diagonal = 1
+                elif diagonal_array[j] == diagonal_array[(j + 1)] == 2:
                     counter2 += 1
-                    if (counter2 == self.kInARow):
-                        numberDiagonal = 2
-        return numberDiagonal
+                    if (counter2 == self.k_in_a_row):
+                        number_diagonal = 2
+        return number_diagonal
 
-    def checkDiagonalBLTR(self) -> int:
+    def check_diagonal_BLTR(self) -> int:
         """Returns if winning condition is achieved diagonally from bottom left to top right"""
         
-        numberDiagonal = 0
-        for i in range(-1, self.nRow - 3):
-            flippedField = np.fliplr(self.field)
-            diagonalArray = np.diagonal(flippedField, i)
+        number_diagonal = 0
+        for i in range(-1, self.n_row - 3):
+            flipped_field = np.fliplr(self.field)
+            diagonal_array = np.diagonal(flipped_field, i)
             counter1 = 1 
             counter2 = 1
-            for j in range(len(diagonalArray) - 1): 
-                if diagonalArray[j] == diagonalArray[(j + 1)] == 1:
+            for j in range(len(diagonal_array) - 1): 
+                if diagonal_array[j] == diagonal_array[(j + 1)] == 1:
                     counter1 += 1
-                    if (counter1 == self.kInARow):
-                        numberDiagonal = 1
-                elif diagonalArray[j] == diagonalArray[(j + 1)] == 2:
+                    if (counter1 == self.k_in_a_row):
+                        number_diagonal = 1
+                elif diagonal_array[j] == diagonal_array[(j + 1)] == 2:
                     counter2 += 1
-                    if (counter2 == self.kInARow):
-                        numberDiagonal = 2
-        return numberDiagonal
+                    if (counter2 == self.k_in_a_row):
+                        number_diagonal = 2
+        return number_diagonal
     
     def position_valid(self, row: int, col: int) -> bool:
-        return (self.positionExists(row, col) and self.positionFree(row, col))
-
-    '''def flip(self) -> None: 
-        self.field = np.fliplr(self.field)
-        self.flipped = not self.flipped'''
+        return (self.position_exists(row, col) and self.position_free(row, col))

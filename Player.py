@@ -27,24 +27,25 @@ class Player:
                 Returns:
                         tuple: field coordinates
         '''
-        if board.positionExists(row, col) and board.positionFree(row, col):          
+        if board.position_exists(row, col) and board.position_free(row, col):          
             print(f"made a move {row} {col}")
+            '''
             print("GROSSEN DANK AN:")
+            print("Lilli")
+            print("Kckbn")
             print("Maggo")
             print("Minium aka ZF")
             print("Henny")
             print("interreptor")
             print("Nomad | repräsentativ Präsident")
             print("Christiane Kriese")
+            '''
             board.field[row, col] = self.player_number
             board.take_turn()
-        else:
-            #print("move failed")
-            a = 1 + 1
         return(row, col)
 
 
     
-    def toString(self) -> str:
+    def to_string(self) -> str:
         """Returns name and the number of a player as a string."""
         return("Name: " + self.name + '\n' + "Player Number: " + str(self.player_number))

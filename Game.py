@@ -11,7 +11,7 @@ class Game:
         return
 
     def game_loop(self) -> None:
-        finished = false 
+        finished = False 
         while not finished:
             print()
     
@@ -20,61 +20,62 @@ class Game:
 #initializing board
 while True: 
     try: 
-        NumberRows = int(input("Number of Rows: "))
+        number_rows = int(input("Number of Rows: "))
         break
     except:
         print("Invalid input type. Choose again.")
 while True: 
     try: 
-        NumberCols = int(input("Number of Columns: "))   
+        number_cols = int(input("Number of Columns: "))   
         break
     except:
         print("Invalid input type. Choose again.")
 while True: 
     try: 
-        NumberKInARow = int(input("Length of Row needed to win (The input needs to be smaller than the row- and the col-number): "))        
-        if(NumberCols > NumberKInARow and NumberRows > NumberKInARow):
+        number_k_in_a_row = int(input("Length of Row needed to win (The input needs to be smaller than the row- and the col-number): "))        
+        if(number_cols > number_k_in_a_row and number_rows > number_k_in_a_row):
             break
     except:
         print("Invalid input. Choose again.")
 
-board = Board(NumberRows, NumberCols, NumberKInARow)
+board = Board(number_rows, number_cols, number_k_in_a_row)
 
 #choose player number
 while True: 
     try:         
-        playerDecision = int(input("How many players are taking part in the game? Choose between 0 and 2: "))
-        if(playerDecision == 1 or playerDecision == 2 or playerDecision == 0):
+        player_decision = int(input("How many players are taking part in the game? Choose between 0 and 2: "))
+        if(player_decision == 1 or player_decision == 2 or player_decision == 0):
             break
     except:
         print("Your input is out of the expected range!")
 #initialzing players
-playerList = []
-while(int(playerDecision) > 0):
-    playerList.append(Player(str(input("please enter a name for player " + str(len(playerList) + 1) + ": " )), (len(playerList) + 1)))
-    playerDecision = int(playerDecision) - 1
+player_list = []
+while(int(player_decision) > 0):
+    player_list.append(Player(str(input("please enter a name for player " + str(len(player_list) + 1) + ": " )), (len(player_list) + 1)))
+    player_decision = int(player_decision) - 1
 
-while(len(playerList) < 2):
+while(len(player_list) < 2):
     botName = str(input("please enter a bot name: "))
     while True:
         try:         
-            difficultyLevel = int(input("please choose a bot difficulty between 1 and 3: "))
-            if(difficultyLevel == 1 or difficultyLevel == 2 or difficultyLevel == 3):
+            difficulty_level = int(input("please choose a bot difficulty between 1 and 3: "))
+            if(difficulty_level == 1 or difficulty_level == 2 or difficulty_level == 3):
                 break
         except:
             print("Your input is out of the expected range!")
-    playerList.append(MyBot(botName, (len(playerList) + 1), difficultyLevel))
+    player_list.append(MyBot(botName, (len(player_list) + 1), difficulty_level))
     
 
 #start game loop 
 end = False
 while not end:
-    if(not(isinstance(playerList[0], MyBot) and isinstance(playerList[1], MyBot))):
+    board.display()
+    if(not(isinstance(player_list[0], MyBot) and isinstance(player_list[1], MyBot))):
         while (board.has_won() == 0):
-            print("turn: " + playerList[board.getTurn()].name)
-            if(isinstance(playerList[board.getTurn()], MyBot)):
+            print("turn: " + player_list[board.get_turn()].name)
+            if(isinstance(player_list[board.get_turn()], MyBot)):
                 print("bot turn")
-                playerList[board.getTurn()].make_move(board) 
+                player_list[board.get_turn()].make_move(board) 
             else:
                 print("player turn")
                 while True:
@@ -84,18 +85,19 @@ while not end:
                         break
                     except:
                         print("Invalid input type. Choose Again.")
-                playerList[board.getTurn()].make_move(row, col, board) 
+                player_list[board.get_turn()].make_move(row, col, board) 
             board.display()
 
         print("The game finished !!!")
         if (board.has_won() == 1): 
-            print(playerList[0].name + " has won!")
+            print(player_list[0].name + " has won!")
         elif(board.has_won() == 2):
-            print(playerList[1].name + " has won!")
+            print(player_list[1].name + " has won!")
         elif(board.has_won() == -1):
             print("The game is a draw.")
         board.reset()
-        if(str(input("do you want to play another round? (yes/ no)")) != "yes"):
+        if(str(input("do you want to play another round? (yes/ no) ")) != "yes"):
+            print("Thanks for playing.")
             end = True
         
 
@@ -110,14 +112,14 @@ while not end:
         while (counter < rounds):
             print("Round: " + str(counter + 1) + " ---------------------------------------------------------------------------------------")
             while (board.has_won() == 0):
-                playerList[board.getTurn()].make_move(board) 
+                player_list[board.get_turn()].make_move(board) 
 
             print("The game finished !!!")
             board.display()
             if (board.has_won() == 1): 
-                print(playerList[0].name + " has won!")
+                print(player_list[0].name + " has won!")
             elif (board.has_won() == 2):
-                print(playerList[1].name + " has won!")
+                print(player_list[1].name + " has won!")
             elif(board.has_won() == -1):
                 print("The game is a draw.")
             board.reset()
