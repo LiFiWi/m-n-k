@@ -39,7 +39,7 @@ while True:
         print("Invalid input. Choose again.")
 
 board = Board(number_rows, number_cols, number_k_in_a_row)
-
+board.display()
 #choose player number
 while True: 
     try:         

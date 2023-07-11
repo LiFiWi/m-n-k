@@ -39,10 +39,13 @@ class Board:
     def create_top_border(self) -> str:
         """Returns a string that displays the board's columns."""
         whitespace = len(str(self.m_col))
-        top_border = whitespace * " " + " │ "
+        top_border = len(str(self.n_row)) * " " + " │ "
 
+        
         for i in range(self.m_col):
-            top_border += str(i) + " │" + " " * (whitespace - len(str(i + 1 ))) 
+            top_border += str(i)  + " │" + " " * (whitespace - len(str(i + 1)))
+            if whitespace == 1:
+                top_border += " "
         return top_border
 
 
@@ -228,7 +231,3 @@ class Board:
     
     def position_valid(self, row: int, col: int) -> bool:
         return (self.position_exists(row, col) and self.position_free(row, col))
-
-
-b = Board(22, 20, 3)
-b.display()

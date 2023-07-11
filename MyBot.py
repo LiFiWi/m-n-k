@@ -96,14 +96,15 @@ class MyBot(Player):
             check_number = 2
         else:
             check_number = 1
-        for i in range((0 - board.n_row), (board.n_row - (board.kInARow - 1))):
-            diagonal_array = np.diagonal(board.field, i)
+        for offset_horizontal in range((0 - board.n_row), (board.n_row - (board.k_in_a_row - 1))):
+            diagonal_array = np.diagonal(board.field, offset_horizontal)
             counter1 = 1 
-            for j in range(len(diagonal_array) - 1): 
-                if diagonal_array[j] == diagonal_array[(j + 1)] == 1:
+            for offset_vertical in range(len(diagonal_array) - 1): 
+                if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == check_number:
                     counter1 += 1
-                    offset_absolute_value = abs(i) + (j - 1)
-                    return self.make_defending_move_TLBR(counter1, i, offset_absolute_value, j, board)    
+                    offset_absolute_value = abs(offset_horizontal) + (offset_vertical - 1)
+                    if self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) != None:
+                        return self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) #returned nur einmal    
         return None
     
     def check_in_danger_BLTR(self, board: Board) -> tuple:
@@ -111,38 +112,43 @@ class MyBot(Player):
             check_number = 2
         else:
             check_number = 1
-        for i in range((0-board.n_row), (board.n_row -(board.kInARow-1))):
-            diagonal_array = np.diagonal(board.flipped_field, i)
+        for offset_horizontal in range((0-board.n_row), (board.n_row -(board.k_in_a_row-1))):
+            diagonal_array = np.diagonal(board.flipped_field, offset_horizontal)
             counter1 = 1 
-            for j in range(len(diagonal_array) - 1): 
-                if diagonal_array[j] == diagonal_array[(j + 1)] == 1:
+            for offset_vertical in range(len(diagonal_array) - 1): 
+                if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == 1:
                     counter1 += 1
-                    offset_absolute_value = abs(i) + (j - 1)
-                    return self.make_defending_move_BLTR(counter1, i, offset_absolute_value, j, board)
+                    offset_absolute_value = abs(offset_horizontal) + (offset_vertical - 1)
+                    if self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) != None:
+                        return self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board)
         return None
     
     def from_flipped_to_non_flipped(self, flipped_col: int, board: Board) -> int:
             return (board.m_col - flipped_col)
 
     def make_defending_move_TLBR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if counter == 2:
+        if counter == 2 and self.make_move_TLBR_2(offset_horizontal, offset_absolute, offset_vertical, board) != None:
             return self.make_move_TLBR_2(offset_horizontal, offset_absolute, offset_vertical, board)
-        if counter == 3:
+        if counter == 3 and self.make_move_TLBR_3(offset_horizontal, offset_absolute, offset_vertical, board) != None:
             return self.make_move_TLBR_3(offset_horizontal, offset_absolute, offset_vertical, board)
         return None
     
     def make_defending_move_BLTR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if counter == 2:
+        if counter == 2 and self.make_move_BLTR_2(offset_horizontal, offset_absolute, offset_vertical, board) != None:
             return self.make_move_BLTR_2(offset_horizontal, offset_absolute, offset_vertical, board)
-        if counter == 3:
+        if counter == 3 and self.make_move_BLTR_3(offset_horizontal, offset_absolute, offset_vertical, board) != None:
             return self.make_move_BLTR_3(offset_horizontal, offset_absolute, offset_vertical, board)
 
     def make_move_TLBR_2(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
         if offset_horizontal >= 0:
+            print(offset_vertical-1)
+            print(offset_absolute)
             if board.position_valid((offset_vertical-1), (offset_absolute)):
+                print(offset_vertical-1)
+                print(offset_absolute)
                 return ((offset_vertical-1), (offset_absolute))
             elif board.position_valid((offset_vertical+2), (offset_absolute+3)):
-                return ((offset_vertical+2), (offset_absolute+3))
+                return ((offset_vertical+2), (offset_absolute+3))#funktioniert
         if offset_horizontal < 0:
             if board.position_valid((offset_absolute), (offset_vertical-1)):
                 return ((offset_absolute), (offset_vertical-1))
@@ -152,9 +158,9 @@ class MyBot(Player):
     def make_move_BLTR_2(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
         if offset_horizontal >= 0:
             if board.position_valid((offset_vertical-1), (self.from_flipped_to_non_flipped(offset_absolute, board)-1)):
-                return ((offset_vertical-1), (self.from_flipped_to_non_flipped(offset_absolute, board)-1))
+                return ((offset_vertical-1), (self.from_flipped_to_non_flipped(offset_absolute, board)-1)) #funktioniert
             elif board.position_valid((offset_vertical+2), (self.from_flipped_to_non_flipped((offset_absolute+3), board)-1)):
-                return ((offset_vertical+2), (self.from_flipped_to_non_flipped((offset_absolute+3), board)-1))
+                return ((offset_vertical+2), (self.from_flipped_to_non_flipped((offset_absolute+3), board)-1)) #funktioniert
         if offset_horizontal < 0:
             if board.position_valid((offset_absolute), (self.from_flipped_to_non_flipped((offset_vertical-1), board)-1)):
                 return ((offset_absolute), (self.from_flipped_to_non_flipped((offset_vertical-1), board)-1))
