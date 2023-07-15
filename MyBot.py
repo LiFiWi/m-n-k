@@ -69,7 +69,7 @@ class MyBot(Player):
         for offset_vertical in range(board.m_col):
             counter1 = 1   
             for offset_horizontal in range (board.n_row-1):
-                if board.field[offset_horizontal, offset_vertical] == board.field[(offset_horizontal + 1), (offset_vertical)] == 1:
+                if board.field[offset_horizontal, offset_vertical] == board.field[(offset_horizontal + 1), (offset_vertical)] == check_number:
                     counter1 += 1
                     for i in range (2, board.k_in_a_row):
                         if (counter1 == i):
@@ -105,7 +105,7 @@ class MyBot(Player):
             diagonal_array = np.diagonal(board.flipped_field, offset_horizontal)
             counter1 = 1 
             for offset_vertical in range(len(diagonal_array) - 1): 
-                if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == 1:
+                if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == check_number:
                     counter1 += 1
                     offset_absolute_value = abs(offset_horizontal) + (offset_vertical -1)
                     for i in range (2, board.k_in_a_row): 
