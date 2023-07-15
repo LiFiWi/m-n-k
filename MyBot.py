@@ -23,8 +23,6 @@ class MyBot(Player):
         if  self.difficulty_level == 1:
             row = np.random.randint(0, board.n_row)
             col = np.random.randint(0, board.m_col)
-        #print(row)
-        #print(col)
         if self.difficulty_level == 2:
             if (self.check_in_danger(board) != None):
                 row = self.check_in_danger(board)[0]
@@ -102,9 +100,9 @@ class MyBot(Player):
             for offset_vertical in range(len(diagonal_array) - 1): 
                 if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == check_number:
                     counter1 += 1
-                    offset_absolute_value = abs(offset_horizontal) + (offset_vertical - 1)
+                    offset_absolute_value = abs(offset_horizontal) + (offset_vertical -1)
                     if self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) != None:
-                        return self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) #returned nur einmal    
+                        return self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board)  
         return None
     
     def check_in_danger_BLTR(self, board: Board) -> tuple:
@@ -118,7 +116,7 @@ class MyBot(Player):
             for offset_vertical in range(len(diagonal_array) - 1): 
                 if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == 1:
                     counter1 += 1
-                    offset_absolute_value = abs(offset_horizontal) + (offset_vertical - 1)
+                    offset_absolute_value = abs(offset_horizontal) + (offset_vertical -1)
                     if self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) != None:
                         return self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board)
         return None
@@ -127,71 +125,42 @@ class MyBot(Player):
             return (board.m_col - flipped_col)
 
     def make_defending_move_TLBR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if counter == 2 and self.make_move_TLBR_2(offset_horizontal, offset_absolute, offset_vertical, board) != None:
-            return self.make_move_TLBR_2(offset_horizontal, offset_absolute, offset_vertical, board)
-        if counter == 3 and self.make_move_TLBR_3(offset_horizontal, offset_absolute, offset_vertical, board) != None:
-            return self.make_move_TLBR_3(offset_horizontal, offset_absolute, offset_vertical, board)
+        if counter == 2 and self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 2) != None:
+            return self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 2)
+        if counter == 3 and self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 3) != None:
+            return self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 3)
         return None
     
     def make_defending_move_BLTR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if counter == 2 and self.make_move_BLTR_2(offset_horizontal, offset_absolute, offset_vertical, board) != None:
-            return self.make_move_BLTR_2(offset_horizontal, offset_absolute, offset_vertical, board)
-        if counter == 3 and self.make_move_BLTR_3(offset_horizontal, offset_absolute, offset_vertical, board) != None:
-            return self.make_move_BLTR_3(offset_horizontal, offset_absolute, offset_vertical, board)
-
-    def make_move_TLBR_2(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
+        if counter == 2 and self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 2) != None:
+            return self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 2)
+        if counter == 3 and self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 3) != None:
+            return self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 3)
+            
+    def make_move_TLBR(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board, length: int) -> tuple:
         if offset_horizontal >= 0:
-            print(offset_vertical-1)
-            print(offset_absolute)
-            if board.position_valid((offset_vertical-1), (offset_absolute)):
-                print(offset_vertical-1)
-                print(offset_absolute)
-                return ((offset_vertical-1), (offset_absolute))
+            if board.position_valid((offset_vertical+(1-length)), (offset_absolute-(length-2))):
+                return ((offset_vertical+(1-length)), (offset_absolute-(length-2)))
             elif board.position_valid((offset_vertical+2), (offset_absolute+3)):
-                return ((offset_vertical+2), (offset_absolute+3))#funktioniert
+                return ((offset_vertical+2), (offset_absolute+3))
         if offset_horizontal < 0:
-            if board.position_valid((offset_absolute), (offset_vertical-1)):
-                return ((offset_absolute), (offset_vertical-1))
+            if board.position_valid((offset_absolute-(length-2)), (offset_vertical+(1-length))):
+                return ((offset_absolute-(length-2)), (offset_vertical+(1-length)))
             elif board.position_valid((offset_absolute+3), (offset_vertical+2)):
-                return ((offset_absolute+3), (offset_vertical+2))
-
-    def make_move_BLTR_2(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
+                return ((offset_absolute+3), (offset_vertical+2))  
+            
+    def make_move_BLTR(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board, length: int) -> tuple:
         if offset_horizontal >= 0:
-            if board.position_valid((offset_vertical-1), (self.from_flipped_to_non_flipped(offset_absolute, board)-1)):
-                return ((offset_vertical-1), (self.from_flipped_to_non_flipped(offset_absolute, board)-1)) #funktioniert
-            elif board.position_valid((offset_vertical+2), (self.from_flipped_to_non_flipped((offset_absolute+3), board)-1)):
-                return ((offset_vertical+2), (self.from_flipped_to_non_flipped((offset_absolute+3), board)-1)) #funktioniert
+            if board.position_valid((offset_vertical+(1-length)), (self.from_flipped_to_non_flipped(offset_absolute-(length-2), board)-1)):
+                return ((offset_vertical+(1-length)), (self.from_flipped_to_non_flipped(offset_absolute-(length-2), board)-1))
+            elif board.position_valid((offset_vertical+2), (self.from_flipped_to_non_flipped(offset_absolute+3, board)-1)):
+                return ((offset_vertical+2), (self.from_flipped_to_non_flipped(offset_absolute+3, board)-1))
         if offset_horizontal < 0:
-            if board.position_valid((offset_absolute), (self.from_flipped_to_non_flipped((offset_vertical-1), board)-1)):
-                return ((offset_absolute), (self.from_flipped_to_non_flipped((offset_vertical-1), board)-1))
-            elif board.position_valid((offset_absolute+3), (self.from_flipped_to_non_flipped((offset_vertical+2), board)-1)):
-                return ((offset_absolute+3), (self.from_flipped_to_non_flipped((offset_vertical+2), board)-1))
+            if board.position_valid((offset_absolute-(length-2)), (self.from_flipped_to_non_flipped(offset_vertical+(1-length), board)-1)):
+                return ((offset_absolute-(length-2)), (self.from_flipped_to_non_flipped(offset_vertical+(1-length), board)-1))
+            elif board.position_valid((offset_absolute+3), (self.from_flipped_to_non_flipped(offset_vertical+2, board)-1)):
+                return ((offset_absolute+3), (self.from_flipped_to_non_flipped(offset_vertical+2, board)-1))
 
-    def make_move_TLBR_3(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if offset_horizontal >= 0:
-            if board.position_valid((offset_vertical-2), (offset_absolute-1)):
-                return ((offset_vertical-2), (offset_absolute-1))
-            elif board.position_valid((offset_vertical+2), (offset_absolute+3)):
-                return ((offset_vertical+2), (offset_absolute+3)) 
-        if offset_horizontal < 0:
-            if board.position_valid((offset_absolute-1), (offset_vertical-2)):
-                return ((offset_absolute-1), (offset_vertical-2))
-            elif board.position_valid((offset_absolute+3), (offset_vertical+2)):
-                return ((offset_absolute+3), (offset_vertical+2))
-
-    def make_move_BLTR_3(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if offset_horizontal >= 0:
-            if board.position_valid((offset_vertical-2), (self.from_flipped_to_non_flipped((offset_absolute-1), board)-1)):
-                return ((offset_vertical-2), (self.from_flipped_to_non_flipped((offset_absolute-1), board)-1))
-            elif board.position_valid((offset_vertical+2), self.from_flipped_to_non_flipped((offset_absolute+4), board)):
-                return ((offset_vertical+2), self.from_flipped_to_non_flipped((offset_absolute+4), board)) 
-        if offset_horizontal < 0:
-            if  board.position_valid((self.from_flipped_to_non_flipped((offset_vertical-2), board)-1), (offset_absolute-1)):
-                return ((self.from_flipped_to_non_flipped((offset_vertical-2), board)-1), (offset_absolute-1))
-            elif board.position_valid((offset_absolute+3), self.from_flipped_to_non_flipped((offset_vertical+2), board)):
-                return ((offset_absolute+3), self.from_flipped_to_non_flipped((offset_vertical+2), board))
-    
-    
     def finish_game(self, board: Board) -> tuple:
         check_winning = None
         check_winning = self.check_winning_horizontal(board)
