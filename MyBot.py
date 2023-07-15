@@ -42,29 +42,23 @@ class MyBot(Player):
         if check_danger == None:
             check_danger = self.check_in_danger_BLTR(board)
         return check_danger
-            
-        
-    
+
     def check_in_danger_horizontal(self, board: Board) -> tuple:
         if self.player_number == 1:
             check_number = 2
         else:
             check_number = 1
-        for i in range(board.n_row):
+        for offset_horizontal in range(board.n_row):
             counter1 = 1   
-            for j in range (board.m_col - 1):
-                if board.field[i,j] == board.field[i, (j + 1)] == check_number:
+            for offset_vertical in range (board.m_col - 1):
+                if board.field[offset_horizontal,offset_vertical] == board.field[offset_horizontal, (offset_vertical + 1)] == check_number:
                     counter1 += 1
-                    if (counter1 == 2):
-                        if(board.position_exists(i, (j - 1)) and board.position_free(i, (j - 1))):
-                            return (i, (j-1))
-                        elif (board.position_exists(i, (j + 2)) and board.position_free(i, (j + 2))):
-                            return (i, (j + 2))
-                    if (counter1 == 3):
-                        if(board.position_exists(i, (j - 2)) and board.position_free(i, (j - 2))):
-                                return (i, (j - 2))
-                        elif (board.position_exists(i, (j + 2)) and board.position_free(i, (j + 2))):
-                            return (i, (j + 2)) 
+                    for i in range (2, board.k_in_a_row):
+                        if (counter1 == i):
+                            if(board.position_valid(offset_horizontal, (offset_vertical - (i - 1)))):
+                                return (offset_horizontal, (offset_vertical - (i - 1)))
+                            elif (board.position_valid(offset_horizontal, (offset_vertical + 2))):
+                                return (offset_horizontal, (offset_vertical + 2))
         return None
     
     def check_in_danger_vertical(self, board: Board) -> tuple:
@@ -72,21 +66,17 @@ class MyBot(Player):
             check_number = 2
         else:
             check_number = 1
-        for j in range(board.m_col):
+        for offset_vertical in range(board.m_col):
             counter1 = 1   
-            for i in range (board.n_row-1):
-                if board.field[i, j] == board.field[(i + 1), (j)] == 1:
+            for offset_horizontal in range (board.n_row-1):
+                if board.field[offset_horizontal, offset_vertical] == board.field[(offset_horizontal + 1), (offset_vertical)] == 1:
                     counter1 += 1
-                    if (counter1 == 2):
-                        if(board.position_exists((i - 1), j) and board.position_free((i - 1), j)):
-                            return ((i - 1), j)
-                        elif (board.position_exists((i + 2), j) and board.position_free((i + 2), j)):
-                            return ((i + 2), j)
-                    if (counter1 == 3):
-                        if(board.position_exists((i - 2), j) and board.position_free((i - 2), j)):
-                                return ((i - 2), j)
-                        elif (board.position_exists((i + 2), j) and board.position_free((i + 2), j)):
-                            return ((i + 2), j)
+                    for i in range (2, board.k_in_a_row):
+                        if (counter1 == i):
+                            if(board.position_valid((offset_horizontal - (i - 1)), offset_vertical)):
+                                return ((offset_horizontal - (i - 1)), offset_vertical)
+                            elif (board.position_valid((offset_horizontal + 2), offset_vertical)):
+                                return ((offset_horizontal + 2), offset_vertical)
         return None
     
     def check_in_danger_TLBR(self, board: Board) -> tuple:
@@ -101,8 +91,9 @@ class MyBot(Player):
                 if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == check_number:
                     counter1 += 1
                     offset_absolute_value = abs(offset_horizontal) + (offset_vertical -1)
-                    if self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) != None:
-                        return self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board)  
+                    for i in range (2, board.k_in_a_row): 
+                        if self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board, i) != None:
+                            return self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board, i)  
         return None
     
     def check_in_danger_BLTR(self, board: Board) -> tuple:
@@ -117,25 +108,22 @@ class MyBot(Player):
                 if diagonal_array[offset_vertical] == diagonal_array[(offset_vertical + 1)] == 1:
                     counter1 += 1
                     offset_absolute_value = abs(offset_horizontal) + (offset_vertical -1)
-                    if self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board) != None:
-                        return self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board)
+                    for i in range (2, board.k_in_a_row): 
+                        if self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board, i) != None:
+                            return self.make_defending_move_BLTR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board, i)
         return None
     
     def from_flipped_to_non_flipped(self, flipped_col: int, board: Board) -> int:
             return (board.m_col - flipped_col)
 
-    def make_defending_move_TLBR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if counter == 2 and self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 2) != None:
-            return self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 2)
-        if counter == 3 and self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 3) != None:
-            return self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, 3)
+    def make_defending_move_TLBR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board, length: int) -> tuple:
+        if counter == length and self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, length) != None:
+            return self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, length)
         return None
     
-    def make_defending_move_BLTR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board) -> tuple:
-        if counter == 2 and self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 2) != None:
-            return self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 2)
-        if counter == 3 and self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 3) != None:
-            return self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, 3)
+    def make_defending_move_BLTR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board, length: int) -> tuple:
+        if counter == length and self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, length) != None:
+            return self.make_move_BLTR(offset_horizontal, offset_absolute, offset_vertical, board, length)
             
     def make_move_TLBR(self, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board, length: int) -> tuple:
         if offset_horizontal >= 0:
