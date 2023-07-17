@@ -33,21 +33,21 @@ class MyBot(Player):
         return super().make_move(row, col, board)
         
     def check_in_danger(self, board: Board) -> tuple:
-        check_danger = None
-        check_danger = self.check_in_danger_horizontal(board)
-        if check_danger == None:
-            check_danger = self.check_in_danger_vertical(board)
-        if check_danger == None:
-            check_danger = self.check_in_danger_TLBR(board)
-        if check_danger == None:
-            check_danger = self.check_in_danger_BLTR(board)
-        return check_danger
-
-    def check_in_danger_horizontal(self, board: Board) -> tuple:
         if self.player_number == 1:
             check_number = 2
         else:
             check_number = 1
+        check_danger = None
+        check_danger = self.check_in_danger_horizontal(board, check_number)
+        if check_danger == None:
+            check_danger = self.check_in_danger_vertical(board, check_number)
+        if check_danger == None:
+            check_danger = self.check_in_danger_TLBR(board, check_number)
+        if check_danger == None:
+            check_danger = self.check_in_danger_BLTR(board, check_number)
+        return check_danger
+
+    def check_in_danger_horizontal(self, board: Board, check_number: int) -> tuple:
         for offset_horizontal in range(board.n_row):
             counter1 = 1   
             for offset_vertical in range (board.m_col - 1):
@@ -63,11 +63,7 @@ class MyBot(Player):
                                 return (offset_horizontal, (offset_vertical + 2))
         return None
     
-    def check_in_danger_vertical(self, board: Board) -> tuple:
-        if self.player_number == 1:
-            check_number = 2
-        else:
-            check_number = 1
+    def check_in_danger_vertical(self, board: Board, check_number: int) -> tuple:
         for offset_vertical in range(board.m_col):
             counter1 = 1   
             for offset_horizontal in range (board.n_row-1):
@@ -83,11 +79,7 @@ class MyBot(Player):
                                 return ((offset_horizontal + 2), offset_vertical)
         return None
     
-    def check_in_danger_TLBR(self, board: Board) -> tuple:
-        if self.player_number == 1:
-            check_number = 2
-        else:
-            check_number = 1
+    def check_in_danger_TLBR(self, board: Board, check_number: int) -> tuple:
         for offset_horizontal in range((0 - board.n_row), (board.n_row - (board.k_in_a_row - 1))):
             diagonal_array = np.diagonal(board.field, offset_horizontal)
             counter1 = 1 
@@ -102,11 +94,7 @@ class MyBot(Player):
                             return self.make_defending_move_TLBR(counter1, offset_horizontal, offset_absolute_value, offset_vertical, board, i)  
         return None
     
-    def check_in_danger_BLTR(self, board: Board) -> tuple:
-        if self.player_number == 1:
-            check_number = 2
-        else:
-            check_number = 1
+    def check_in_danger_BLTR(self, board: Board, check_number: int) -> tuple:
         for offset_horizontal in range((0-board.n_row), (board.n_row -(board.k_in_a_row-1))):
             diagonal_array = np.diagonal(board.flipped_field, offset_horizontal)
             counter1 = 1 
@@ -158,14 +146,15 @@ class MyBot(Player):
                 return ((offset_absolute+3), (self.from_flipped_to_non_flipped(offset_vertical+2, board)-1))
 
     def finish_game(self, board: Board) -> tuple:
+        check_number = self.player_number
         check_winning = None
-        check_winning = self.check_winning_horizontal(board)
+        check_winning = self.check_in_danger_horizontal(board)
         if check_winning == None:
-            check_winning = self.check_winning_vertical(board)
+            check_winning = self.check_in_danger_vertical(board)
         if check_winning == None:
-            check_winning = self.check_winning_TLBR(board)
+            check_winning = self.check_in_danger_TLBR(board)
         if check_winning == None:
-            check_winning = self.check_winning_BLTR(board)
+            check_winning = self.check_in_danger_BLTR(board)
         return check_winning
     
     '''
