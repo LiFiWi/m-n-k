@@ -27,6 +27,25 @@ class MyBot(Player):
             if (self.check_in_danger(board) != None):
                 row = self.check_in_danger(board)[0]
                 col = self.check_in_danger(board)[1]
+            elif (self.finish_game(board) != None):
+                row = self.finish_game(board)[0]
+                col = self.finish_game(board)[1]
+            else:
+                row = np.random.randint(0, board.n_row)
+                col = np.random.randint(0, board.m_col)
+        if self.difficulty_level == 3:
+            if (self.finish_game(board) != None):
+                print("finish")
+                row = self.finish_game(board)[0]
+                col = self.finish_game(board)[1]
+            elif (self.start_attack(board) != None):
+                print("start")
+                row = self.start_attack(board)[0]
+                col = self.start_attack(board)[1]
+            elif (self.check_in_danger(board) != None):
+                print("check")
+                row = self.check_in_danger(board)[0]
+                col = self.check_in_danger(board)[1]
             else:
                 row = np.random.randint(0, board.n_row)
                 col = np.random.randint(0, board.m_col)
@@ -148,15 +167,38 @@ class MyBot(Player):
     def finish_game(self, board: Board) -> tuple:
         check_number = self.player_number
         check_winning = None
-        check_winning = self.check_in_danger_horizontal(board)
+        check_winning = self.check_in_danger_horizontal(board,check_number)
         if check_winning == None:
-            check_winning = self.check_in_danger_vertical(board)
+            check_winning = self.check_in_danger_vertical(board, check_number)
         if check_winning == None:
-            check_winning = self.check_in_danger_TLBR(board)
+            check_winning = self.check_in_danger_TLBR(board,check_number)
         if check_winning == None:
-            check_winning = self.check_in_danger_BLTR(board)
+            check_winning = self.check_in_danger_BLTR(board, check_number)
         return check_winning
     
+    def start_attack(self, board: Board) -> tuple:
+        for offset_horizontal in range (board.n_row - 1):
+            for offset_vertical in range (board.m_col - 1):
+                if board.field[offset_horizontal, offset_vertical] == self.player_number:
+                    if board.position_valid(offset_horizontal + 1, offset_vertical):
+                        return (offset_horizontal + 1, offset_vertical)
+                    elif board.position_valid(offset_horizontal - 1, offset_vertical):
+                        return (offset_horizontal - 1, offset_vertical)
+                    elif board.position_valid(offset_horizontal, offset_vertical + 1):
+                        return (offset_horizontal, offset_vertical + 1)
+                    elif board.position_valid(offset_horizontal, offset_vertical - 1):
+                        return (offset_horizontal, offset_vertical - 1)
+                    elif board.position_valid(offset_horizontal + 1, offset_vertical + 1):
+                        return (offset_horizontal + 1, offset_vertical + 1)
+                    elif board.position_valid(offset_horizontal - 1, offset_vertical - 1):
+                        return (offset_horizontal - 1, offset_vertical - 1)
+                    elif board.position_valid(offset_horizontal + 1, offset_vertical - 1):
+                        return (offset_horizontal + 1, offset_vertical - 1)
+                    elif board.position_valid(offset_horizontal - 1, offset_vertical + 1):
+                        return (offset_horizontal - 1, offset_vertical + 1)
+        return None
+
+                        
     '''
     Bot Methoden: 
     Check if in danger: checks if enemy has row of k-2
