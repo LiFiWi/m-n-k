@@ -1,15 +1,8 @@
 import numpy as np
+from random import randint as r
 
 class Board:
-    # n Zeilen, äußere Arrays
-    n_row = None 
-    # m Spalten - Elemente in den inneren Arrays
-    m_col = None
-    k_in_a_row = None 
-    field = None 
-    flipped_field = None
 
-    your_turn = 0
 
     def __init__(self, n = 5, m = 5,  k = 4) -> None:
         '''
@@ -25,12 +18,13 @@ class Board:
         self.k_in_a_row = k 
         self.field = np.full([n, m], 0)
         self.flipped_field = np.fliplr(self.field)
-
+        
+    your_turn = r(0, 1)
     
     def reset(self) -> None:
         """Resets the board's fields to default (0)."""
         self.field.fill(0)
-        self.take_turn = 0
+        self.your_turn = r(0, 1)
         
     def fill_up(self, number: int) -> None:
         """Fills the Board's fields with the given player_number."""

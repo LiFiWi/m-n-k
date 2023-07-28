@@ -20,6 +20,18 @@ class MyBot(Player):
         self.difficulty_level = level
     
     def make_move(self, board: Board) -> tuple:
+        '''
+        Chooses a field varying by selected difficulty. Difficulty 1 is the random Bot. Difficulty 2 is the defensive Bot. Difficulty 3 is the offensive Bot. 
+        Returns if existing and free the field. Sets the field to the given player_number.
+
+                Parameters:
+                        self: player
+                        board: Board where Player is active
+                        
+
+                Returns:
+                        tuple: field coordinates
+        '''
         if  self.difficulty_level == 1:
             row = np.random.randint(0, board.n_row)
             col = np.random.randint(0, board.m_col)
@@ -38,14 +50,14 @@ class MyBot(Player):
                 print("finish")
                 row = self.finish_game(board)[0]
                 col = self.finish_game(board)[1]
-            elif (self.start_attack(board) != None):
-                print("start")
-                row = self.start_attack(board)[0]
-                col = self.start_attack(board)[1]
             elif (self.check_in_danger(board) != None):
                 print("check")
                 row = self.check_in_danger(board)[0]
                 col = self.check_in_danger(board)[1]
+            elif (self.start_attack(board) != None):
+                print("start")
+                row = self.start_attack(board)[0]
+                col = self.start_attack(board)[1]
             else:
                 row = np.random.randint(0, board.n_row)
                 col = np.random.randint(0, board.m_col)
@@ -197,12 +209,3 @@ class MyBot(Player):
                     elif board.position_valid(offset_horizontal - 1, offset_vertical + 1):
                         return (offset_horizontal - 1, offset_vertical + 1)
         return None
-
-                        
-    '''
-    Bot Methoden: 
-    Check if in danger: checks if enemy has row of k-2
-    Check if can finish: checks if self can finish a row to k 
-    Muster erkennen(Reihe eigene)
-    Zwickmühle bauen
-    '''
