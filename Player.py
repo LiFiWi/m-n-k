@@ -29,17 +29,6 @@ class Player:
         '''
         if board.position_exists(row, col) and board.position_free(row, col):          
             print(f"made a move {row} {col}")
-            '''
-            print("GROSSEN DANK AN:")
-            print("Lilli")
-            print("Kckbn")
-            print("Maggo")
-            print("Minium aka ZF")
-            print("Henny")
-            print("interreptor")
-            print("Nomad | repräsentativ Präsident")
-            print("Christiane Kriese")
-            '''
             board.field[row, col] = self.player_number
             board.take_turn()
         return(row, col)
