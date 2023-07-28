@@ -116,7 +116,18 @@ class MyBot(Player):
                                 return (offset_horizontal, (offset_vertical + 2))
         return None
     
-    def check_in_danger_vertical(self, board: Board, check_number: int) -> tuple:
+    def check_in_danger_vertical(self, board: Board, check_number: int) -> tuple:#
+        '''
+        Checks if bot is in danger of being defeated vertically. If thats the case he tries to stop the threatening row.
+
+                Parameters:
+                        self: player
+                        board: Board where Player is active
+                        check_number: playernumber of the opponent 
+
+                Returns:
+                        tuple: field coordinates
+        '''
         for offset_vertical in range(board.m_col):
             counter1 = 1   
             for offset_horizontal in range (board.n_row-1):
@@ -133,6 +144,17 @@ class MyBot(Player):
         return None
     
     def check_in_danger_TLBR(self, board: Board, check_number: int) -> tuple:
+        '''
+        Checks if bot is in danger of being defeated diagonally (top left to bottom right). If thats the case he tries to stop the threatening row.
+
+                Parameters:
+                        self: player
+                        board: Board where Player is active
+                        check_number: playernumber of the opponent 
+
+                Returns:
+                        tuple: field coordinates
+        '''
         for offset_horizontal in range((0 - board.n_row), (board.n_row - (board.k_in_a_row - 1))):
             diagonal_array = np.diagonal(board.field, offset_horizontal)
             counter1 = 1 
@@ -148,6 +170,17 @@ class MyBot(Player):
         return None
     
     def check_in_danger_BLTR(self, board: Board, check_number: int) -> tuple:
+        '''
+        Checks if bot is in danger of being defeated diagonally (top right to bottom left). If thats the case he tries to stop the threatening row.
+
+                Parameters:
+                        self: player
+                        board: Board where Player is active
+                        check_number: playernumber of the opponent 
+
+                Returns:
+                        tuple: field coordinates
+        ''' 
         for offset_horizontal in range((0-board.n_row), (board.n_row -(board.k_in_a_row-1))):
             diagonal_array = np.diagonal(board.flipped_field, offset_horizontal)
             counter1 = 1 
@@ -163,7 +196,18 @@ class MyBot(Player):
         return None
     
     def from_flipped_to_non_flipped(self, flipped_col: int, board: Board) -> int:
-            return (board.m_col - flipped_col)
+        '''
+        Checks if bot is in danger of being defeated diagonall (top right to bottom left). If thats the case he tries to stop the threatening row.
+
+                Parameters:
+                        self: player
+                        board: Board where Player is active
+                        check_number: playernumber of the opponent 
+
+                Returns:
+                        tuple: field coordinates
+        ''' 
+        return (board.m_col - flipped_col)
 
     def make_defending_move_TLBR(self, counter: int, offset_horizontal: int, offset_absolute: int, offset_vertical: int, board: Board, length: int) -> tuple:
         if counter == length and self.make_move_TLBR(offset_horizontal, offset_absolute, offset_vertical, board, length) != None:
