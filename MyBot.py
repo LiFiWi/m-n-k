@@ -64,6 +64,17 @@ class MyBot(Player):
         return super().make_move(row, col, board)
         
     def check_in_danger(self, board: Board) -> tuple:
+        '''
+        Checks if bot is in danger of being defeated. If thats the case he tries to stop the threatening row.
+
+                Parameters:
+                        self: player
+                        board: Board where Player is active
+                        
+
+                Returns:
+                        tuple: field coordinates
+        '''
         if self.player_number == 1:
             check_number = 2
         else:
@@ -79,6 +90,17 @@ class MyBot(Player):
         return check_danger
 
     def check_in_danger_horizontal(self, board: Board, check_number: int) -> tuple:
+        '''
+        Checks if bot is in danger of being defeated horizontally. If thats the case he tries to stop the threatening row.
+
+                Parameters:
+                        self: player
+                        board: Board where Player is active
+                        check_number: playernumber of the opponent 
+
+                Returns:
+                        tuple: field coordinates
+        '''
         for offset_horizontal in range(board.n_row):
             counter1 = 1   
             for offset_vertical in range (board.m_col - 1):

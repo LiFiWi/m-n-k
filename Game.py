@@ -39,14 +39,12 @@ class Game:
             except:
                 print("Your input is out of the expected range!")
         #initializing players        
-        self.player_list = []
-
-        while(int(player_decision) > 0):
-            self.player_list.append(Player(str(input("please enter a name for player " + str(len(self.player_list) + 1) + ": " )), (len(self.player_list) + 1)))
-            player_decision = int(player_decision) - 1
-
-        while(len(self.player_list) < 2):
-            botName = str(input("please enter a bot name: "))
+        if(player_decision == 2):
+            self.player1 = Player(str(input("please enter a name for player 1: " )), (len(self.player_list) + 1))
+            self.player2 = Player(str(input("please enter a name for player 1: " )), (len(self.player_list) + 1))
+        
+        if(player_decision == 1):
+            self.player1 = Player(str(input("please enter a name for player 1: " )), (len(self.player_list) + 1))
             while True:
                 try:         
                     difficulty_level = int(input("please choose a bot difficulty between 1 and 3: "))
@@ -54,8 +52,28 @@ class Game:
                         break
                 except:
                     print("Your input is out of the expected range!")
-                    
-            self.player_list.append(MyBot(botName, (len(self.player_list) + 1), difficulty_level))
+            self.player2 = MyBot( str(input("please enter a bot name: ")), (len(self.player_list) + 1), difficulty_level)
+            
+        if(player_decision == 0):
+            while True:
+                try:         
+                    difficulty_level = int(input("please choose a bot difficulty between 1 and 3: "))
+                    if(difficulty_level == 1 or difficulty_level == 2 or difficulty_level == 3):
+                        break
+                except:
+                    print("Your input is out of the expected range!")
+            self.player1 = MyBot( str(input("please enter a bot name: ")), (len(self.player_list) + 1), difficulty_level)
+                        
+            while True:
+                try:         
+                    difficulty_level = int(input("please choose a bot difficulty between 1 and 3: "))
+                    if(difficulty_level == 1 or difficulty_level == 2 or difficulty_level == 3):
+                        break
+                except:
+                    print("Your input is out of the expected range!")
+            self.player2 = MyBot( str(input("please enter a bot name: ")), (len(self.player_list) + 1), difficulty_level)
+            self.player_list = [self.player1, self.player2]
+            #starting game loop
             self.game_loop()
 
     def game_loop(self) -> None:
