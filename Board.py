@@ -18,12 +18,12 @@ class Board:
         self.k_in_a_row = k 
         self.field = np.full([n, m], 0)
         self.flipped_field = np.fliplr(self.field)        
-        self.your_turn = r(0, 1)
+        self.your_turn = r(0, 0)
     
     def reset(self) -> None:
         """Resets the board's squares to default (0)."""
         self.field.fill(0)
-        self.your_turn = r(0, 1)        
+        self.your_turn = r(0, 0)        
 
     def create_top_border(self) -> str:
         """Returns a string that displays the board's columns."""
@@ -189,8 +189,10 @@ class Board:
             for j in range (self.m_col - 1):
                 if self.field[i,j] == self.field[i, (j + 1)] == 1:
                     counter1 += 1
+                    counter2 = 1
                 elif self.field[i , j] == self.field[i, (j + 1)] == 2:
-                    counter2 += 1                    
+                    counter2 += 1
+                    counter1 = 1                    
                 if (counter1 == self.k_in_a_row or counter2 == self.k_in_a_row):
                     if (counter1 == self.k_in_a_row):
                         number_horizontal = 1
@@ -215,10 +217,12 @@ class Board:
             for j in range (self.n_row -1):
                 if self.field[j, i] == self.field[(j + 1), (i)] == 1:
                     counter1 += 1
+                    counter2 = 1
                     if (counter1 == self.k_in_a_row):
                         number_vertical = 1
                 elif self.field[j, i] == self.field[(j+1), (i)] == 2:
                     counter2 += 1
+                    counter1 = 1
                     if (counter2 == self.k_in_a_row):
                         number_vertical = 2
         return number_vertical
@@ -241,10 +245,12 @@ class Board:
             for j in range(len(diagonal_array) - 1): 
                 if diagonal_array[j] == diagonal_array[(j + 1)] == 1:
                     counter1 += 1
+                    counter2 = 1
                     if (counter1 == self.k_in_a_row):
                         number_diagonal = 1
                 elif diagonal_array[j] == diagonal_array[(j + 1)] == 2:
                     counter2 += 1
+                    counter1 = 1
                     if (counter2 == self.k_in_a_row):
                         number_diagonal = 2
         return number_diagonal
@@ -268,10 +274,12 @@ class Board:
             for j in range(len(diagonal_array) - 1): 
                 if diagonal_array[j] == diagonal_array[(j + 1)] == 1:
                     counter1 += 1
+                    counter2 = 1
                     if (counter1 == self.k_in_a_row):
                         number_diagonal = 1
                 elif diagonal_array[j] == diagonal_array[(j + 1)] == 2:
                     counter2 += 1
+                    counter1 = 1
                     if (counter2 == self.k_in_a_row):
                         number_diagonal = 2
         return number_diagonal
