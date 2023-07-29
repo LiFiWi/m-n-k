@@ -53,6 +53,10 @@ class Board:
         """Returns a string that is a dotted line, matching the board's length."""
         return((len(self.create_board_row(0)) - 1) * "-")
 
+    def to_string(self) -> str:
+        """Returns the number of columns and rows and the needed span of fields to win."""
+        return ("m_col: " + str(self.m_col) + '\n'+ "n_row: " + str(self.n_row) + '\n' + "k_in_a_row: " + str(self.k_in_a_row) )
+
     def display(self) -> None:
         """Prints a visualized version of the board."""
         field_list = self.field.tolist()        
@@ -118,6 +122,34 @@ class Board:
         else:
             return True
             
+    def position_valid(self, row: int, col: int) -> bool:
+        '''
+            Checks if the given position is valid(existing on the field and not already taken)
+
+                Parameters: 
+                    row(int): y coordinate to be checked 
+                    col(int): x coordinate to be checked 
+
+                Return:
+                    Boolean indicating if the position exists and is not taken.
+        '''
+        return (self.position_exists(row, col) and self.position_free(row, col))
+    
+    def take_turn(self) -> None: 
+        '''Shifts an int between 0 and 1 indicating whose turn it is to make a move.'''
+        self.your_turn = (self.your_turn + 1) % 2
+    
+    def get_turn(self) -> int:
+        '''
+            Getter returning the value of 'your_turn' indicating whose turn it is to make a move.
+            
+            Return:
+                your_turn(int)
+                1 -> player1's turn to make a move    
+                2 -> player2's turn to make a move    
+        '''
+        return self.your_turn
+
     def has_won(self) -> int:
         '''
             Returns an int indicating if a player has met the win condition or if the game ended in a draw. 
@@ -139,25 +171,6 @@ class Board:
         if(wonInt == 0):
             wonInt = self.check_diagonal_BLTR()    
         return wonInt
-    
-    def take_turn(self) -> None: 
-        '''Shifts an int between 0 and 1 indicating whose turn it is to make a move.'''
-        self.your_turn = (self.your_turn + 1) % 2
-    
-    def get_turn(self) -> int:
-        '''
-            Getter returning the value of 'your_turn' indicating whose turn it is to make a move.
-            
-            Return:
-                your_turn(int)
-                1 -> player1's turn to make a move    
-                2 -> player2's turn to make a move    
-        '''
-        return self.your_turn
-
-    def to_string(self) -> str:
-        """Returns the number of columns and rows and the needed span of fields to win."""
-        return ("m_col: " + str(self.m_col) + '\n'+ "n_row: " + str(self.n_row) + '\n' + "k_in_a_row: " + str(self.k_in_a_row) )
 
     def check_horizontal(self) -> int:
         """
@@ -210,7 +223,7 @@ class Board:
                         number_vertical = 2
         return number_vertical
     
-    def check_diagonal_TLBR(self) -> int:
+    def check_diagonal_TLBR(self) -> int: # top left to bottom right corner 
         """
             Returns if winning condition is achieved diagonal from top left to bottom right
 
@@ -236,7 +249,7 @@ class Board:
                         number_diagonal = 2
         return number_diagonal
 
-    def check_diagonal_BLTR(self) -> int:
+    def check_diagonal_BLTR(self) -> int: # bottom left to top right corner 
         """
             Returns if winning condition is achieved diagonal from bottom left to top right
                 
@@ -263,16 +276,4 @@ class Board:
                         number_diagonal = 2
         return number_diagonal
     
-    def position_valid(self, row: int, col: int) -> bool:
-        '''
-            Checks if the given position is valid(existing on the field and not already taken)
-
-                Parameters: 
-                    row(int): y coordinate to be checked 
-                    col(int): x coordinate to be checked 
-
-                Return:
-                    Boolean indicating if the position exists and is not taken.
-        '''
-        return (self.position_exists(row, col) and self.position_free(row, col))
 

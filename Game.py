@@ -149,6 +149,7 @@ class Game:
                         #draw counter
                         win_counter_draw += 1
                     self.board.reset()
+                    #Gleicher Spieler beginnt
                     self.board.your_turn = 1
                     counter += 1
                 
