@@ -6,28 +6,33 @@ import numpy as np
 class Game:
         
     def start(self) -> None:
+        '''
+            Initializing board's width(m_number_cols) and height(n_number_rows) and the number deciding how many elements you need to place in a row to win.
+            Initializing the players, differentiating between three version(player vs player/ player vs bot/ bot vs bot) decided through the users input 
+            Starting the game loop 
+        '''
         #initializing board
         while True: 
             try: 
-                self.number_rows = int(input("Number of Rows: "))
+                self.n_number_rows = int(input("Number of Rows: "))
                 break
             except:
                 print("Invalid input type. Choose again.")
         while True: 
             try: 
-                self.number_cols = int(input("Number of Columns: "))   
+                self.m_number_cols = int(input("Number of Columns: "))   
                 break
             except:
                 print("Invalid input type. Choose again.")
         while True: 
             try: 
                 self.number_k_in_a_row = int(input("Length of Row needed to win (The input needs to be smaller than the row- and the col-number): "))        
-                if(self.number_cols > self.number_k_in_a_row and self.number_rows > self.number_k_in_a_row):
+                if(self.m_number_cols > self.number_k_in_a_row and self.n_number_rows > self.number_k_in_a_row):
                     break
             except:
                 print("Invalid input. Choose again.")
 
-        self.board = Board(self.number_rows, self.number_cols, self.number_k_in_a_row)
+        self.board = Board(self.n_number_rows, self.m_number_cols, self.number_k_in_a_row)
         self.board.display()
                         
         #choose player number
@@ -56,9 +61,10 @@ class Game:
                     print("Your input is out of the expected range!")
                     
             self.player_list.append(MyBot(botName, (len(self.player_list) + 1), difficulty_level))
-            self.game_loop()
+        self.game_loop()
 
     def game_loop(self) -> None:
+        '''Game loop alternating between the two players making their move, checking if the win condition is met and stopping if thats the case.'''
         #start game loop 
         end = False
         while not end:
@@ -83,9 +89,9 @@ class Game:
 
                 print("The game finished !!!")
                 if (self.board.has_won() == 1): 
-                    print(self.player_list[0].name + " has won!")
+                    print(self.player_list[0].to_string() + '\n' + "has won!")
                 elif(self.board.has_won() == 2):
-                    print(self.player_list[1].name + " has won!")
+                    print(self.player_list[1].to_string() + '\n' + "has won!")
                 elif(self.board.has_won() == -1):
                     print("The game is a draw.")
                 self.board.reset()
@@ -110,9 +116,9 @@ class Game:
                     print("The game finished !!!")
                     self.board.display()
                     if (self.board.has_won() == 1): 
-                        print(self.player_list[0].name + " has won!")
+                        print(self.player_list[0].to_string() + '\n' + "has won!")
                     elif (self.board.has_won() == 2):
-                        print(self.player_list[1].name + " has won!")
+                        print(self.player_list[1].to_string() + '\n' + "has won!")
                     elif(self.board.has_won() == -1):
                         print("The game is a draw.")
                     self.board.reset()

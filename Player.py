@@ -4,7 +4,7 @@ import numpy as np
 class Player:
     def __init__(self, name: str, player_number: int) -> None:
         '''
-        This is the constructor for the class Player. It sets its name, player_number and Board.
+            This is the constructor for the class Player. It sets its name, player_number and Board.
 
                 Parameters:
                         name(string): player's name
@@ -16,7 +16,8 @@ class Player:
 
     def make_move(self, row: int, col: int, board: Board) -> tuple:
         '''
-        Returns if existing and free the field. Sets the field to the given player_number.
+            If the given position(row, col) exits and is not taken, the player is allowed to make his move on the chosen position. 
+            Sets the field to the given player_number.
 
                 Parameters:
                         self: player
@@ -25,7 +26,7 @@ class Player:
                         
 
                 Returns:
-                        tuple: field coordinates
+                    tuple -> coordinates of chosen position 
         '''
         if board.position_exists(row, col) and board.position_free(row, col):          
             print(f"made a move {row} {col}")
