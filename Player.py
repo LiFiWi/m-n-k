@@ -37,5 +37,5 @@ class Player:
 
     
     def to_string(self) -> str:
-        """Returns name and the number of a player as a string."""
+        """Returns the name and the number of the player as a string."""
         return("Name: " + self.name + '\n' + "Player Number: " + str(self.player_number))

@@ -4,8 +4,6 @@ import numpy as np
 
 class MyBot(Player):    
 
-    difficulty_level = 0
-
     def __init__(self, name: str, player_number: int, level: int) -> None:
         '''
         This is the constructor for the class Player. It sets its name, player_number and Board.
@@ -46,16 +44,17 @@ class MyBot(Player):
                 row = np.random.randint(0, board.n_row)
                 col = np.random.randint(0, board.m_col)
         if self.difficulty_level == 3:
-            if (self.finish_game(board) != None):
-                print("finish")
+            if not (np.any(board.field)):
+                print("test")
+                row = round((board.n_row-1)/2)
+                col = round((board.m_col-1)/2)
+            elif (self.finish_game(board) != None):
                 row = self.finish_game(board)[0]
                 col = self.finish_game(board)[1]
             elif (self.check_in_danger(board) != None):
-                print("check")
                 row = self.check_in_danger(board)[0]
                 col = self.check_in_danger(board)[1]
             elif (self.start_attack(board) != None):
-                print("start")
                 row = self.start_attack(board)[0]
                 col = self.start_attack(board)[1]
             else:
@@ -352,3 +351,8 @@ class MyBot(Player):
                     elif board.position_valid(offset_horizontal - 1, offset_vertical + 1):
                         return (offset_horizontal - 1, offset_vertical + 1)
         return None
+
+    def to_string(self) -> str:
+        """Returns the name, the number and the difficulty level of the bot as a string."""
+        return(super().to_string() + '\n' + f"Schwierigkeitslevel: {self.difficulty_level}")
+

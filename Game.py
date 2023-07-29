@@ -14,27 +14,29 @@ class Game:
         #initializing board
         while True: 
             try: 
-                self.n_number_rows = int(input("Number of Rows: "))
-                break
+                self.n_number_rows = int(input("Number of Rows(needs to be > 2): "))
+                if(self.n_number_rows > 2):
+                    break
             except:
                 print("Invalid input type. Choose again.")
         while True: 
             try: 
-                self.m_number_cols = int(input("Number of Columns: "))   
-                break
+                self.m_number_cols = int(input("Number of Columns(needs to be > 2): "))   
+                if(self.m_number_cols > 2):
+                    break
             except:
                 print("Invalid input type. Choose again.")
         while True: 
             try: 
-                self.number_k_in_a_row = int(input("Length of Row needed to win (The input needs to be smaller than the row- and the col-number): "))        
-                if(self.m_number_cols > self.number_k_in_a_row and self.n_number_rows > self.number_k_in_a_row):
+                self.number_k_in_a_row = int(input("Length of Row needed to win (The input needs to be smaller than the row- and the col-number and needs to be at least two): "))        
+                if(self.m_number_cols > self.number_k_in_a_row and self.n_number_rows > self.number_k_in_a_row and self.number_k_in_a_row > 1):
                     break
             except:
                 print("Invalid input. Choose again.")
 
         self.board = Board(self.n_number_rows, self.m_number_cols, self.number_k_in_a_row)
         self.board.display()
-                        
+        
         #choose player number
         while True: 
             try:         
@@ -62,6 +64,9 @@ class Game:
                     
             self.player_list.append(MyBot(botName, (len(self.player_list) + 1), difficulty_level))
         self.game_loop()
+
+
+
 
     def game_loop(self) -> None:
         '''Game loop alternating between the two players making their move, checking if the win condition is met and stopping if thats the case.'''
@@ -100,7 +105,15 @@ class Game:
                     end = True
                 
 
-            else:
+            else: #bot vs bot
+                #counter 
+                win_counter_1 = 0
+                win_counter_2 = 0
+                win_counter_draw = 0
+                start_counter_1 = 0
+                start_counter_2 = 0                
+                # 
+
                 while True:
                     try:
                         rounds = int(input("How many rounds do you want your bots to battle? "))
@@ -109,6 +122,12 @@ class Game:
                         print("Invalid input type. Choose Again.")
                 counter = 0
                 while (counter < rounds):
+                    #start counter 
+                    if(self.board.get_turn() == 1):
+                        start_counter_1 += 1
+                    else:
+                        start_counter_2 += 1
+                    #
                     print("Round: " + str(counter + 1) + " ---------------------------------------------------------------------------------------")
                     while (self.board.has_won() == 0):
                         self.player_list[self.board.get_turn()].make_move(self.board) 
@@ -117,12 +136,40 @@ class Game:
                     self.board.display()
                     if (self.board.has_won() == 1): 
                         print(self.player_list[0].to_string() + '\n' + "has won!")
+                        #win counter
+                        win_counter_1 += 1
+                        #
                     elif (self.board.has_won() == 2):
                         print(self.player_list[1].to_string() + '\n' + "has won!")
+                        #win counter
+                        win_counter_2 += 1
+                        #
                     elif(self.board.has_won() == -1):
                         print("The game is a draw.")
+                        #draw counter
+                        win_counter_draw += 1
                     self.board.reset()
+                    self.board.your_turn = 1
                     counter += 1
+                
+                ("----------------------------------------Statistiken----------------------------------------")
+                print(f"Gespielte Runden: {rounds}")
+                #player one win rate + start count + difficulty level
+                print(self.player_list[0].to_string())
+                print(f"Begonnene Runden: {start_counter_1}")
+                print(f"Gewonnene Runden: {win_counter_1}")
+                print(f"Gewinnrate {win_counter_1/ rounds}")
+
+                #player two win rate + start count + difficulty level
+                print(self.player_list[1].to_string())
+                print(f"Begonnene Runden: {start_counter_2}")
+                print(f"Gewonnene Runden: {win_counter_2}")
+                print(f"Gewinnrate {win_counter_2/ rounds}")
+                #draw rate                 
+                print(f"Runden unentschieden: {win_counter_draw}")
+                print(f"Unentschieden Rate {win_counter_draw/ rounds}")
+
+
                 end = True
             
 
