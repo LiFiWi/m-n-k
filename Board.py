@@ -145,8 +145,8 @@ class Board:
             
             Return:
                 your_turn(int)
-                1 -> player1's turn to make a move    
-                2 -> player2's turn to make a move    
+                0 -> player1's turn to make a move    
+                1 -> player2's turn to make a move    
         '''
         return self.your_turn
 

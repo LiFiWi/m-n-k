@@ -123,7 +123,7 @@ class Game:
                 counter = 0
                 while (counter < rounds):
                     #start counter 
-                    if(self.board.get_turn() == 1):
+                    if(self.board.get_turn() == 0):
                         start_counter_1 += 1
                     else:
                         start_counter_2 += 1
@@ -149,6 +149,7 @@ class Game:
                         #draw counter
                         win_counter_draw += 1
                     self.board.reset()
+                    counter += 1
 
                 ("----------------------------------------Statistiken----------------------------------------")
                 print(f"Gespielte Runden: {rounds}")
