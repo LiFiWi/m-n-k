@@ -65,9 +65,6 @@ class Game:
             self.player_list.append(MyBot(botName, (len(self.player_list) + 1), difficulty_level))
         self.game_loop()
 
-
-
-
     def game_loop(self) -> None:
         '''Game loop alternating between the two players making their move, checking if the win condition is met and stopping if thats the case.'''
         #start game loop 
@@ -167,7 +164,6 @@ class Game:
                 #draw rate                 
                 print(f"Runden unentschieden: {win_counter_draw}")
                 print(f"Unentschieden Rate {win_counter_draw/ rounds}")
-
 
                 end = True
             
