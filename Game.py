@@ -94,10 +94,8 @@ class Game:
                 while (self.board.has_won() == 0):
                     print("turn: " + self.player_list[self.board.get_turn()].name)
                     if(isinstance(self.player_list[self.board.get_turn()], MyBot)):
-                        print("bot turn")
                         self.player_list[self.board.get_turn()].make_move(self.board) 
                     else:
-                        print("player turn")
                         while True:
                             try:
                                 row = int(input("Row Number: "))
@@ -128,7 +126,6 @@ class Game:
                 win_counter_draw = 0
                 start_counter_1 = 0
                 start_counter_2 = 0                
-                # 
 
                 while True:
                     try:

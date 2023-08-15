@@ -29,7 +29,6 @@ class Player:
                     tuple -> coordinates of chosen position 
         '''
         if board.position_exists(row, col) and board.position_free(row, col):          
-            #print(f"made a move {row} {col}")
             board.field[row, col] = self.player_number
             board.take_turn()
         return(row, col)

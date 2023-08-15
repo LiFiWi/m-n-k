@@ -45,7 +45,6 @@ class MyBot(Player):
                 col = np.random.randint(0, board.m_col)
         if self.difficulty_level == 3:
             if not (np.any(board.field)):
-                print("test")
                 row = round((board.n_row-1)/2)
                 col = round((board.m_col-1)/2)
             elif (self.finish_game(board) != None):
