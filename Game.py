@@ -170,16 +170,16 @@ class Game:
                 print(self.player_list[0].to_string())
                 print(f"Begonnene Runden: {start_counter_1}")
                 print(f"Gewonnene Runden: {win_counter_1}")
-                print(f"Gewinnrate {win_counter_1/ rounds}")
+                print(f"Gewinnrate: {win_counter_1/ rounds}")
 
                 #player two win rate + start count + difficulty level
                 print(self.player_list[1].to_string())
                 print(f"Begonnene Runden: {start_counter_2}")
                 print(f"Gewonnene Runden: {win_counter_2}")
-                print(f"Gewinnrate {win_counter_2/ rounds}")
+                print(f"Gewinnrate: {win_counter_2/ rounds}")
                 #draw rate                 
                 print(f"Runden unentschieden: {win_counter_draw}")
-                print(f"Unentschieden Rate {win_counter_draw/ rounds}")
+                print(f"Unentschieden Rate: {win_counter_draw/ rounds}")
 
                 end = True
             
