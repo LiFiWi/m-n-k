@@ -44,7 +44,7 @@ class Board:
                 row_index(int): indicating which row should be displayed
         """
         whitespace = len(str(self.n_row))
-        row = str(row_index) + (" " * (whitespace - len(str(row_index)))) +" │ "        
+        row = str(row_index) + (" " * (whitespace - len(str(row_index)))) + " │ "        
         for j in range(len(self.field.tolist()[row_index])):
             row += self.visualize_number(self.field.tolist()[row_index][j]) + " │ "
         return(row)

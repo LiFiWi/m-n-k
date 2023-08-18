@@ -24,9 +24,7 @@ class MyBot(Player):
 
                 Parameters:
                         self: bot
-                        board: Board where Player is active
-                        
-
+                        board: Board where Player is active                        
                 Returns:
                         tuple: field coordinates
         '''
@@ -64,12 +62,10 @@ class MyBot(Player):
     def check_in_danger(self, board: Board) -> tuple:
         '''
         Checks if bot is in danger of being defeated. If thats the case he tries to stop the threatening row.
-
                 Parameters:
                         self: bot
                         board: Board where Player is active
                         
-
                 Returns:
                         tuple: field coordinates
         '''
@@ -324,9 +320,7 @@ class MyBot(Player):
 
                 Parameters:
                         self: bot
-                        board: Board where Player is active
-                        
-
+                        board: Board where Player is active                        
                 Returns:
                         tuple: field coordinates
         '''

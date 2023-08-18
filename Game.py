@@ -184,5 +184,4 @@ class Game:
                 end = True
             
 
-game = Game()
-game.start()
+Game().start()
